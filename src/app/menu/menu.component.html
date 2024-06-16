@@ -1,0 +1,46 @@
+<nav class="navbar">
+    <label class="app-label">Food App</label>
+    <input type="text" placeholder="Search Restaurant..." (input)="filterRestaurants($event)" class="search-bar">
+    <div class="profile" (click)="toggleDropdown()">
+        <i class="fas fa-user profile-icon"></i>
+        <div class="dropdown-menu" [class.show]="isDropdownOpen">
+            <a routerLink="/drop-down-menu/profile" (click)="toggleDropdownProfile()">Profile</a>
+            <a routerLink="/drop-down-menu/cart" (click)="toggleDropdownCart()">Cart</a>
+            <a (click)="logout()">Logout</a>
+        </div>
+    </div>
+</nav>
+
+<div *ngIf="filteredMenu && filteredMenu.length > 0" class="image-gallery">
+    <div class="gallery-image" *ngFor="let item of showAllImages ? filteredMenu : filteredMenu.slice(0, 3)">
+        <img *ngIf="item.foodImage" [src]="'data:image/jpeg;base64,' + item.foodImage" alt="Food Image">
+    </div>
+    <div *ngIf="filteredMenu.length > 4 && !showAllImages" class="gallery-image" (click)="toggleShowAllImages()">
+        <img *ngIf="filteredMenu[3].foodImage" [src]="'data:image/jpeg;base64,' + filteredMenu[3].foodImage"
+            alt="Food Image">
+        <div class="more-images-overlay">+{{ filteredMenu.length - 4 }}</div>
+    </div>
+</div>
+<div *ngIf="filteredMenu && filteredMenu.length > 0" class="menu-list">
+    <ul>
+        <li *ngFor="let item of filteredMenu" class="menu-item">
+            <div class="item-image">
+                <img *ngIf="item.foodImage" [src]="'data:image/jpeg;base64,' + item.foodImage" alt="Restaurant Image">
+            </div>
+            <div class="item-details">
+                <div class="item-name">{{ item.itemName }}</div>
+                <div class="quantity-and-add">
+                    <div class="quantity-selector">
+                        <button class="quantity-button" (click)="decreaseQuantity(item)">-</button>
+                        <span class="quantity-value">{{ item.quantity || 0 }}</span>
+                        <button class="quantity-button" (click)="increaseQuantity(item)">+</button>
+                    </div>
+                    <button class="add-to-cart-button" (click)="addToCart(item)">Add to Cart</button>
+                </div>
+                <div class="item-category">{{ item.category }}</div>
+                <div class="item-description">{{ item.description }}</div>
+                <div class="item-price">{{ formatCurrency(item.price) }}</div>
+            </div>
+        </li>
+    </ul>
+</div>

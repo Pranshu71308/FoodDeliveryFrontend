@@ -1,0 +1,34 @@
+    <nav class="navbar">
+        <div class="navbar-content">
+            <a routerLink="/" class="navbar-link">Home</a>
+            <a routerLink="/services" class="navbar-link">Services</a>
+            <a routerLink="/contact" class="navbar-link">Contact</a>
+            <div class="profile-container" (click)="toggleDropdown()">
+                <i class="fas fa-user profile-icon"></i>
+                <div class="dropdown-menu" [class.show]="isDropdownOpen">
+                    <a routerLink="/profile" (click)="toggleDropdown()">Profile</a>
+                    <a (click)="logout()">Logout</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container">
+        <img src="../../../assets/zomatobackgroud.jpg" alt="Profile Photo" class="profile-photo">
+        <div class="text-overlay">Food Delivery System</div>
+        <div class="text-overlay-1">Best food for you from best Restaurant</div>
+    </div>
+
+    <div class="cards-container">
+        <div class="card" (click)="navigateToOrderOnline()">
+            <img src="../../../assets/Food_app_img.jpg" alt="Order Online Image" class="card-image">
+            <h2>Order Online</h2>
+            <p>Get your food at your doorstep</p>
+        </div>
+        <div class="card">
+            <img src="../../../assets/zomatobackgroud.jpg" alt="Dine Out Image" class="card-image">
+            <h2>Dine Out</h2>
+            <p>Get to visit some best restaurants</p>
+        </div>
+        <!-- Add more cards as needed -->
+    </div>

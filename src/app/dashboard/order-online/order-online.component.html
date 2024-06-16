@@ -1,0 +1,20 @@
+ <nav class="navbar">
+    <div class="navbar-content">
+        <input type="text" placeholder="Search Restaurant..." (input)="filterRestaurants($event)" class="search-bar">    
+    </div>
+</nav>
+<div class="cards-container">
+    <div class="card" *ngFor="let restaurant of filteredRestaurants" (click)="onCardClick(restaurant.restaurantID)">
+        <div class="image-container">
+            <img *ngIf="restaurant.image" [src]="'data:image/jpeg;base64,' + restaurant.image" alt="Restaurant Image">
+        </div>
+        <h2>{{ restaurant.restaurantName }}</h2>
+        <p class="left-aligned">Location: {{ restaurant.location }}</p>
+        <div class="rating-container">
+            <div class="rating-box">
+                <i class="fas fa-star"></i> {{ restaurant.ratings }}
+            </div>
+        </div>
+    </div>
+</div>
+

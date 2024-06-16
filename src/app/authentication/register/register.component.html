@@ -1,0 +1,72 @@
+<!-- <p>register works!</p>
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-4">
+            <div class="card">
+                <div class="card-body">
+                    <h3 class="card-title text-center mb-4">Register</h3>
+                    <form (ngSubmit)="register()">
+                        <div class="form-group mb-3">
+                            <label for="username">Username</label>
+                            <input type="username" class="form-control" id="username" name="username" [(ngModel)]="username" placeholder="Username" required>
+                        </div>
+                        <div class="form-group mb-3">
+                            <label for="email">Email address</label>
+                            <input type="email" class="form-control" id="email" name="email" [(ngModel)]="email" placeholder="Enter email" required>
+                        </div>
+
+                        <div class="form-group mb-3">
+                            <label for="password">Password</label>
+                            <input type="password" class="form-control" id="password" name="password" [(ngModel)]="password" placeholder="Password" required>
+                        </div>
+                        <div class="form-group mb-3">
+                            <label for="confirmPassword">confirmPassword</label>
+                            <input type="confirmPassword" class="form-control" id="confirmPassword" name="confirmPassword" [(ngModel)]="confirmPassword" placeholder="confirmPassword" required>
+                        </div>
+                        <div class="form-group mb-3">
+                            <label for="phoneNumber">Phone Number</label>
+                            <input type="phoneNumber" class="form-control" id="phoneNumber" name="phoneNumber" [(ngModel)]="phoneNumber" placeholder="phoneNumber" required>
+                        </div>
+                     
+                        <button type="submit" class="btn btn-primary w-100">Register</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+  </div> -->
+  <!-- register.component.html -->
+<div class="container-fluid full-height d-flex align-items-center justify-content-center">
+    <div class="row justify-content-center">
+            <div class="card transparent-card">
+                <div class="card-body">
+                    <h3 class="card-title text-center mb-4">Register</h3>
+                    <form (ngSubmit)="register()">
+                        <div class="form-group mb-3">
+                            <label for="username">Username</label>
+                            <input type="username" class="form-control" id="username" name="username" [(ngModel)]="username" placeholder="Username" required autocomplete="off">
+                        </div>
+                        <div class="form-group mb-3">
+                            <label for="email">Email address</label>
+                            <input type="email" class="form-control" id="email" name="email" [(ngModel)]="email" placeholder="Enter email" required  autocomplete="off">
+                        </div>
+                        <div class="form-group mb-3">
+                            <label for="phoneNumber">Phone Number</label>
+                            <input type="phoneNumber" class="form-control" id="phoneNumber" name="phoneNumber" [(ngModel)]="phoneNumber" placeholder="Phone Number" required  autocomplete="off">
+                        </div>
+                        <div class="form-group mb-3">
+                            <label for="password">Password</label>
+                            <input type="password" class="form-control" id="password" name="password" [(ngModel)]="password" placeholder="Password" required  autocomplete="off">
+                        </div>
+                        <div class="form-group mb-3">
+                            <label for="confirmPassword">Confirm Password</label>
+                            <input type="password" class="form-control" id="confirmPassword" name="confirmPassword" [(ngModel)]="confirmPassword" placeholder="Confirm Password" required  autocomplete="off">
+                        </div>
+
+                        <button type="submit" class="btn btn-primary w-100">Register</button>
+                    </form>
+                    <span>Already have an account? <a class="reglink" routerLink="/authentication/login">Login here</a></span>
+                </div>
+            </div>
+    </div>
+</div>

@@ -1,0 +1,36 @@
+.full-height {
+    height: 100vh;
+    background-image: url('../../../assets/RegisterPage.jpg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+  }
+  .card{
+    width: 395px;
+  }
+  .transparent-card {
+    background-color: rgba(65, 60, 60, 0.8); /* Semi-transparent white background */
+    border: none;
+    color: white; 
+  }
+  .btn-primary{
+    background-color: rgb(235, 73, 73);
+  }
+  .reglink,.forgot-link{
+    color:rgb(235, 73, 73) ;
+  }
+  
+.form-control {
+    /* background-color: rgba(255, 255, 255, 0.2); */
+    border: none;
+    color: black; /* Set the text color to black */
+  }
+  
+  .form-control::placeholder {
+    color: rgba(2, 2, 2, 0.6);
+  }
+  
+  .form-control:focus {
+    box-shadow: none;
+    background-color: rgba(255, 255, 255, 0.3);
+  }

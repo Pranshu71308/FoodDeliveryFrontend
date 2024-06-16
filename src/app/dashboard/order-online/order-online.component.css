@@ -1,0 +1,119 @@
+/* Styling for the navbar */
+.navbar {
+    background-color: #f0f0f0;
+    padding: 10px 20px;
+    display: flex;
+    justify-content: center;
+}
+
+.navbar-content {
+    display: flex;
+    align-items: center;
+}
+
+.search-bar {
+    width: 100%;
+    max-width: 600px;
+    padding: 8px 16px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+.cards-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+.cards-container h2{
+    font-family: Okra, Helvetica, sans-serif;
+    text-align: left; 
+    font-size: 30px;
+}
+.card {
+    width: calc(33.33% - 20px); 
+    padding: 20px;
+    box-sizing: border-box;
+    text-align: center;
+}
+
+.image-container {
+    width: 100%;
+    height: 200px; 
+    overflow: hidden; 
+}
+.left-aligned {
+    font-family: Okra, Helvetica, sans-serif;
+
+    text-align: left; /* Left-align the text */
+}
+.rating-box {
+    display: inline-block;
+    background-color: #4CAF50; /* Green background */
+    color: white;
+    padding: 5px 10px;
+    border-radius: 5px;
+    font-size: 14px;
+    font-weight: bold;
+    text-align: center;
+    margin-top: 5px;
+}
+.image-container img {
+    width: 100%;
+    height: 100%; 
+    object-fit: cover;
+}
+.card:hover {
+    transform: scale(1.03); 
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+}
+
+.card-image {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+    border-radius: 8px 8px 0 0;
+}
+
+.card h2 {
+    margin: 10px 0 5px;
+}
+
+.card p {
+    margin: 5px 0;
+}
+.rating-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 5px;
+}
+
+.rating-box {
+    background-color: #4CAF50; /* Green background */
+    color: white;
+    padding: 5px 10px;
+    border-radius: 5px;
+    font-size: 14px;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+}
+
+.rating-box i {
+    margin-right: 5px; /* Space between the star icon and the rating number */
+}
+
+.progress-bar {
+    width: 100px; /* Adjust as necessary */
+    height: 10px;
+    background-color: #e0e0e0;
+    border-radius: 5px;
+    overflow: hidden;
+    margin-left: 10px;
+}
+
+.progress-fill {
+    height: 100%;
+    background-color: #4CAF50;
+    transition: width 0.3s ease-in-out; /* Smooth transition */
+}
