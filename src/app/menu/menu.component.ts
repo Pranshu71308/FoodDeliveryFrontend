@@ -1,7 +1,8 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-
+import { CartService } from '../services/cart.service';
+import { MatSnackBar, MatSnackBarConfig, MatSnackBarHorizontalPosition, MatSnackBarVerticalPosition } from '@angular/material/snack-bar';
 @Component({
   selector: 'app-menu',
   standalone: true,
@@ -15,8 +16,8 @@ export class MenuComponent implements OnInit {
   menuData: any[] = [];
   isDropdownOpen = false;
 
+  constructor(private route: ActivatedRoute, private router: Router, private snackBar: MatSnackBar, private cartService: CartService) { }
 
-  constructor(private route: ActivatedRoute, private router: Router) { }
   ngOnInit(): void {
     const navigation = window.history.state;
     if (navigation && navigation.menuData) {
@@ -27,30 +28,55 @@ export class MenuComponent implements OnInit {
       console.error('No menu data found in navigation state.');
     }
   }
+
   toggleDropdown() {
     this.isDropdownOpen = !this.isDropdownOpen;
   }
+
   toggleDropdownProfile() {
     this.router.navigate(['/drop-down-menu/profile']);
   }
+
   toggleDropdownCart() {
     this.router.navigate(['/drop-down-menu/cart']);
   }
+
   increaseQuantity(item: any): void {
     item.quantity = (item.quantity || 0) + 1;
   }
 
-  // Function to decrease quantity
   decreaseQuantity(item: any): void {
     if (item.quantity && item.quantity > 0) {
       item.quantity -= 1;
     }
   }
 
-  // Function to add item to cart (replace with your actual cart logic)
   addToCart(item: any): void {
-    console.log(`Added ${item.itemName} to cart with quantity ${item.quantity}`);
-    // Implement your cart logic here (e.g., push item to a cart array, update totals, etc.)
+    if (item.quantity && item.quantity > 0) {
+      this.cartService.addItem(item);
+      this.showSnackbar(`${item.itemName} added to cart`, 'View Cart');
+      item.quantity = 0; // Reset quantity to 0
+    } else {
+      this.showSnackbar(`Please select a quantity greater than 0`);
+    }
+  }
+
+  showSnackbar(message: string, action: string = 'Close') {
+    const config = new MatSnackBarConfig();
+    config.duration = 20000;
+    config.panelClass = ['custom-snackbar'];
+
+    // Set positioning relative to viewport
+    config.horizontalPosition = 'center'; // Align horizontally center
+    config.verticalPosition = 'top'; // Align vertically top
+
+    const snackbarRef = this.snackBar.open(message, action, config);
+
+    snackbarRef.onAction().subscribe(() => {
+      if (action === 'View Cart') {
+        this.router.navigate(['/drop-down-menu/cart']);
+      }
+    });
   }
 
   logout() {
@@ -62,6 +88,7 @@ export class MenuComponent implements OnInit {
     this.router.navigate(['authentication/login']);
     console.log('Logout clicked');
   }
+
   filterRestaurants(event: any) {
     const query = event.target.value.toLowerCase();
     this.filteredMenu = this.menuData.filter(restaurant =>
@@ -77,6 +104,7 @@ export class MenuComponent implements OnInit {
   toggleShowAllImages(): void {
     this.showAllImages = !this.showAllImages;
   }
+
   formatCurrency(amount: number): string {
     return `₹${amount.toFixed(2)}`; // Formats to 2 decimal places
   }
