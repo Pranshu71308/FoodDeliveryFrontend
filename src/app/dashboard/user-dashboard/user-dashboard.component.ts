@@ -1,6 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
-import { Router } from '@angular/router'; // Import Router
+import { Router } from '@angular/router'; 
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-user-dashboard',
@@ -11,25 +12,25 @@ import { Router } from '@angular/router'; // Import Router
 })
 export class UserDashboardComponent {
   isDropdownOpen = false;
-
-    constructor(private router: Router) {}
+  username:string;
+    constructor(private router: Router,private authService:AuthService) {
+      this.username = authService.getUsername() || '';
+    }
 
   toggleDropdown() {
     this.isDropdownOpen = !this.isDropdownOpen;
   }
+  toggleDropdownCart() {
+    this.router.navigate(['/drop-down-menu/cart']);
+  }
 
   logout() {
-    // Implement your logout logic here
-     // Clear local storage
     localStorage.clear();
-
-    // Redirect to login page
     this.router.navigate(['authentication/login']);
     console.log('Logout clicked');
   }
   navigateToOrderOnline() {
     console.log("In order online");
-    // Use router.navigate to navigate without reloading the page
     this.router.navigate(['/dashboard/order-online']);
   }
 }

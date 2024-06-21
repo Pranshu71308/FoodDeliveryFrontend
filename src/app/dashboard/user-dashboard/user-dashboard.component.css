@@ -3,17 +3,11 @@
     justify-content: space-between;
     align-items: center;
     padding: 10px 20px;
-    background-color: transparent; /* Set to fully transparent */
+    background-color: transparent;
     color: white;
-    position: absolute; /* Positioned over the image */
+    position: absolute;
     width: 100%;
-    z-index: 2; /* Ensures the navbar is above the image */
-}
-
-.navbar-content {
-    display: flex;
-    align-items: center;
-    width: 100%;
+    z-index: 2;
 }
 
 .navbar-link {
@@ -27,18 +21,49 @@
     text-decoration: underline;
 }
 
+.navbar-content {
+    display: flex;
+    font-size: 1.2rem;
+    align-items: center;
+    width: 100%;
+    font-family: Okra, Helvetica, sans-serif;;
+}
+
 .profile-container {
     position: relative;
     margin-left: auto;
     cursor: pointer;
+    display: inline-block;
+
+}
+
+.profile-info {
+    display: flex;
+    align-items: center;
 }
 
 .profile-icon {
     font-size: 24px;
     color: white;
+    margin-right: 8px;
+
 }
+
+
+.profilename {
+    /* font-size: 16px; */
+    margin-right: 6px;
+    font-size: 1.2rem;
+    color: rgb(255, 255, 255);
+    max-width: 9rem;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
 .profile-photo {
-    filter: blur(2px); /* Adjust the blur level as needed */
+    filter: blur(2px);
+    /* Adjust the blur level as needed */
     object-fit: cover;
     width: 79rem;
     height: 400px;
@@ -47,13 +72,13 @@
 .dropdown-menu {
     display: none;
     position: absolute;
-    top: 50px;
-    right: 0;
+    right: -7px;
     background-color: white;
     box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
     border-radius: 4px;
     z-index: 1;
     color: black;
+    margin-top: 10px;
 }
 
 .dropdown-menu a {
@@ -72,11 +97,20 @@
     display: block;
 }
 
+.arrow-icon {
+    transition: transform 0.3s ease;
+}
+
+.arrow-icon.rotate {
+    transform: rotate(180deg);
+}
+
 .container {
     position: relative;
     padding: 0%;
     margin: 0%;
-    z-index: 1; /* Ensures the container is below the navbar */
+    z-index: 1;
+
 }
 
 
@@ -89,7 +123,9 @@
     font-size: 45px;
     font-weight: bolder;
     font-family: cursive;
-    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5); /* Adds a shadow to make text more readable */
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+    width: 50%;
+    margin-left: 3rem;
 }
 
 .text-overlay-1 {
@@ -100,14 +136,16 @@
     color: white;
     font-size: 30px;
     font-family: Okra, Helvetica, sans-serif;
-    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5); /* Adds a shadow to make text more readable */
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+    width: 65%;
+    margin-left: 4rem;
 }
 
 .cards-container {
     padding-top: 20px;
     display: flex;
     flex-wrap: wrap;
-    gap: 30px; /* Space between cards */
+    gap: 30px;
     justify-content: center;
     width: 100%;
 }
@@ -117,7 +155,7 @@
     border-radius: 8px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     padding: 20px;
-    width: 500px; /* Set a fixed width for the cards */
+    width: 500px;
     text-align: center;
     transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
     font-family: Okra, Helvetica, sans-serif;
@@ -130,8 +168,8 @@
 }
 
 .card:hover {
-    transform: scale(1.05); /* Slightly increase the size of the card */
-    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); /* Increase the shadow on hover */
+    transform: scale(1.05);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
 }
 
 .card h2 {

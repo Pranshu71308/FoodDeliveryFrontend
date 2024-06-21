@@ -1,46 +1,90 @@
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
+<script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+
 <nav class="navbar">
-    <label class="app-label">Food App</label>
-    <input type="text" placeholder="Search Restaurant..." (input)="filterRestaurants($event)" class="search-bar">
-    <div class="profile" (click)="toggleDropdown()">
-        <i class="fas fa-user profile-icon"></i>
-        <div class="dropdown-menu" [class.show]="isDropdownOpen">
-            <a routerLink="/drop-down-menu/profile" (click)="toggleDropdownProfile()">Profile</a>
-            <a routerLink="/drop-down-menu/cart" (click)="toggleDropdownCart()">Cart</a>
-            <a (click)="logout()">Logout</a>
-        </div>
+  <label class="app-label">Food App</label>
+  <input type="text" placeholder="Search Restaurant..." (input)="filterRestaurants($event)" class="search-bar">
+  <div class="profile" (click)="toggleDropdown()">
+    <i class="fas fa-user profile-icon"></i>
+    <div class="dropdown-menu" [class.show]="isDropdownOpen">
+      <a routerLink="/drop-down-menu/profile" (click)="toggleDropdownProfile()">Profile</a>
+      <a routerLink="/drop-down-menu/cart" (click)="toggleDropdownCart()">My Cart</a>
+      <hr>
+      <a (click)="logout()">Logout</a>
     </div>
+  </div>
 </nav>
 
-<div *ngIf="filteredMenu && filteredMenu.length > 0" class="image-gallery">
+<div class="scrollable-gallery" [class.expanded]="isImagesSectionOpen">
+  <div *ngIf="filteredMenu && filteredMenu.length > 0" class="image-gallery">
     <div class="gallery-image" *ngFor="let item of showAllImages ? filteredMenu : filteredMenu.slice(0, 3)">
-        <img *ngIf="item.foodImage" [src]="'data:image/jpeg;base64,' + item.foodImage" alt="Food Image">
+      <img *ngIf="item.foodImage" [src]="'data:image/jpeg;base64,' + item.foodImage" alt="Food Image">
     </div>
-    <div *ngIf="filteredMenu.length > 4 && !showAllImages" class="gallery-image" (click)="toggleShowAllImages()">
-        <img *ngIf="filteredMenu[3].foodImage" [src]="'data:image/jpeg;base64,' + filteredMenu[3].foodImage"
-            alt="Food Image">
-        <div class="more-images-overlay">+{{ filteredMenu.length - 4 }}</div>
+    <div *ngIf="filteredMenu.length > 4 && !showAllImages && !isImagesSectionOpen" class="gallery-image"
+      (click)="toggleShowAllImages()">
+      <img *ngIf="filteredMenu[3].foodImage" [src]="'data:image/jpeg;base64,' + filteredMenu[3].foodImage"
+        alt="Food Image">
+      <div class="more-images-overlay">+{{ filteredMenu.length - 4 }}</div>
     </div>
+  </div>
 </div>
-<div *ngIf="filteredMenu && filteredMenu.length > 0" class="menu-list">
-    <ul>
-        <li *ngFor="let item of filteredMenu" class="menu-item">
-            <div class="item-image">
-                <img *ngIf="item.foodImage" [src]="'data:image/jpeg;base64,' + item.foodImage" alt="Restaurant Image">
-            </div>
-            <div class="item-details">
-                <div class="item-name">{{ item.itemName }}</div>
-                <div class="quantity-and-add">
-                    <div class="quantity-selector">
-                        <button class="quantity-button" (click)="decreaseQuantity(item)">-</button>
-                        <span class="quantity-value">{{ item.quantity || 0 }}</span>
-                        <button class="quantity-button" (click)="increaseQuantity(item)">+</button>
-                    </div>
-                    <button class="add-to-cart-button" (click)="addToCart(item)">Add to Cart</button>
-                </div>
-                <div class="item-category">{{ item.category }}</div>
-                <div class="item-description">{{ item.description }}</div>
-                <div class="item-price">{{ formatCurrency(item.price) }}</div>
-            </div>
-        </li>
-    </ul>
+<div class="restaurant-details">
+  <div class="restaurantname">
+    {{restaurantname}}
+    <div class="rating-container">
+      <div class="rating-box">
+        <i class="fas fa-star"></i> {{ ratings }}
+      </div>
+    </div>
+  </div>
+  <div class="restaurant-location">
+    {{location}} 
+  </div>
+  <div class="directions" (click)="showMaps()">
+    <i class="fas fa-directions"></i> Directions
+  </div>
 </div>
+<section class="section-links">
+  <a #overview (click)="setActiveSection('overview')">Overview</a>
+  <a #menu (click)="setActiveSection('menu')">Menu</a>
+  <a #images (click)="setActiveSection('images')">Images</a>
+</section>
+
+<div *ngIf="filteredMenu && filteredMenu.length > 0 && isMenuSectionOpen" class="menu-list" id="menu">
+  <ul>
+    <li *ngFor="let item of filteredMenu" class="menu-item">
+      <div class="item-image">
+        <img *ngIf="item.foodImage" [src]="'data:image/jpeg;base64,' + item.foodImage" alt="Restaurant Image">
+      </div>
+      <div class="item-details">
+        <div class="item-name">{{ item.itemName }}</div>
+        <div class="item-category">{{ item.category }}</div>
+        <div class="item-description">{{ item.description }}</div>
+        <div class="item-price">{{ formatCurrency(item.price) }}</div>
+        <div class="quantity-and-add">
+          <div class="quantity-selector">
+            <button class="quantity-button" (click)="decreaseQuantity(item)">-</button>
+            <span class="quantity-value">{{ item.quantity || 0 }}</span>
+            <button class="quantity-button" (click)="increaseQuantity(item)">+</button>
+          </div>
+          <button class="add-to-cart-button" (click)="addToCart(item)">Add to Cart</button>
+        </div>
+      </div>
+    </li>
+  </ul>
+</div>
+
+<div *ngIf="!isMenuSectionOpen && !isOverViewSectionOpen" class="images-list" id="imagepart">
+  <div *ngFor="let item of filteredMenu">
+    <img *ngIf="item.foodImage" [src]="'data:image/jpeg;base64,' + item.foodImage" alt="Food Image">
+  </div>
+</div>
+
+<div *ngIf="!isMenuSectionOpen && !isImagesMenuSectionOpen" class="overview-list" id="overviewpart">
+<div id="maps" style="height: 500px;">
+</div>
+</div>
+<!-- <div *ngIf="isOverViewSectionOpen" class="overview-list" id="overviewpart">
+  <div id="maps" style="height: 500px;"></div>
+</div> -->

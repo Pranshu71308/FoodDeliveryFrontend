@@ -18,22 +18,9 @@ export class LoginComponent {
   errorMessage: string = ""; // Add this line
 
   constructor(private authService: AuthService, private router: Router) { }
-  // login() {
-  //   this.authService.login(this.identifier, this.password).subscribe({
-  //     next: (response) => {
-  //       console.log("Server Response", response);
-  //       console.log("Logged In", response);
-  //       this.router.navigate(['/dashboard']);
-  //     },
-  //     error: (err) => {
-  //       console.error("Login failed", err);
-  //     }
-  //   });
-  // }
   login() {
     this.authService.login(this.identifier, this.password).subscribe({
       next: (response) => {
-        console.log("Server Response", response);
         console.log("Logged In", response);
         this.router.navigate(['/dashboard']);
       },

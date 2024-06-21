@@ -1,20 +1,41 @@
  <nav class="navbar">
     <div class="navbar-content">
-        <input type="text" placeholder="Search Restaurant..." (input)="filterRestaurants($event)" class="search-bar">    
-    </div>
-</nav>
-<div class="cards-container">
-    <div class="card" *ngFor="let restaurant of filteredRestaurants" (click)="onCardClick(restaurant.restaurantID)">
-        <div class="image-container">
-            <img *ngIf="restaurant.image" [src]="'data:image/jpeg;base64,' + restaurant.image" alt="Restaurant Image">
+      <div class="left-links">
+        <a routerLink="/" class="navbar-link Home">Food App</a>
+        <a routerLink="/services" class="navbar-link">Services</a>
+        <a routerLink="/contact" class="navbar-link">Contact</a>
+      </div>
+      <div class="center-search">
+        <input type="text" placeholder="Search Restaurant..." (input)="filterRestaurants($event)" class="search-bar">
+      </div>
+      <div class="profile-container" (click)="toggleDropdown()">
+        <div class="profile-info">
+          <i class="fas fa-user profile-icon"></i>
+          <div class="profilename">{{ username }}</div>
+          <i class="arrow-icon fas" [class]="isDropdownOpen ? 'fas fa-chevron-up' : 'fas fa-chevron-down'"></i>
         </div>
-        <h2>{{ restaurant.restaurantName }}</h2>
-        <p class="left-aligned">Location: {{ restaurant.location }}</p>
-        <div class="rating-container">
-            <div class="rating-box">
-                <i class="fas fa-star"></i> {{ restaurant.ratings }}
-            </div>
+        <div class="dropdown-menu" [class.show]="isDropdownOpen">
+          <a routerLink="/profile" (click)="toggleDropdown()">Profile</a>
+          <a routerLink="/drop-down-menu/cart" (click)="toggleDropdownCart()">My Cart</a>
+          <hr>
+          <a (click)="logout()">Logout</a>
         </div>
+      </div>
     </div>
-</div>
-
+  </nav>
+  
+  <div class="cards-container">
+    <div class="card" *ngFor="let restaurant of filteredRestaurants" (click)="onCardClick(restaurant.restaurantID,restaurant.restaurantName,restaurant.location,restaurant.ratings,restaurant.latitude,restaurant.longitude)">
+      <div class="image-container">
+        <img *ngIf="restaurant.image" [src]="'data:image/jpeg;base64,' + restaurant.image" alt="Restaurant Image">
+      </div>
+      <h2>{{ restaurant.restaurantName }}</h2>
+      <p class="left-aligned">Location: {{ restaurant.location }}</p>
+      <div class="rating-container">
+        <div class="rating-box">
+          <i class="fas fa-star"></i> {{ restaurant.ratings }}
+        </div>
+      </div>
+    </div>
+  </div>
+  

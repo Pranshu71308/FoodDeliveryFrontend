@@ -3,13 +3,19 @@
             <a routerLink="/" class="navbar-link">Home</a>
             <a routerLink="/services" class="navbar-link">Services</a>
             <a routerLink="/contact" class="navbar-link">Contact</a>
-            <div class="profile-container" (click)="toggleDropdown()">
-                <i class="fas fa-user profile-icon"></i>
-                <div class="dropdown-menu" [class.show]="isDropdownOpen">
-                    <a routerLink="/profile" (click)="toggleDropdown()">Profile</a>
-                    <a (click)="logout()">Logout</a>
+              <div class="profile-container" (click)="toggleDropdown()">
+                <div class="profile-info">
+                  <i class="fas fa-user profile-icon"></i>
+                  <div class="profilename">{{ username }}</div>
+                  <i class="arrow-icon fas" [class]="isDropdownOpen ? 'fas fa-chevron-up' : 'fas fa-chevron-down'"></i>
                 </div>
-            </div>
+                <div class="dropdown-menu" [class.show]="isDropdownOpen">
+                  <a routerLink="/profile" (click)="toggleDropdown()">Profile</a>
+                  <a routerLink="/drop-down-menu/cart" (click)="toggleDropdownCart()">My Cart</a>
+                  <hr>
+                  <a (click)="logout()">Logout</a>
+                </div>
+              </div>
         </div>
     </nav>
 

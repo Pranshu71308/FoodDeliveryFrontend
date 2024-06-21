@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { BehaviorSubject, Observable, catchError, tap, throwError } from 'rxjs';
 import { environment } from '../../environments/environment';
+import { jwtDecode } from 'jwt-decode';
 
 interface LoginResponse {
   token: string;
@@ -12,7 +13,6 @@ interface LoginResponse {
 })
 export class AuthService { 
   private readonly JWT_TOKEN = 'JWT-TOKEN';
-  private loggedUser?: string;
   private isAuthenticatedSubject = new BehaviorSubject<boolean>(false);
   private apiurl = environment.apiurl;
   private loginurl = `${this.apiurl}/Auth/login`;
@@ -46,12 +46,19 @@ export class AuthService {
   }
   private storeToken(token: string): void {
     localStorage.setItem(this.JWT_TOKEN, token);
+    if(token){
+      const decodetoken = jwtDecode(token) as { userid: string, username: string };
+      localStorage.setItem("userid",decodetoken.userid);
+      localStorage.setItem("username",decodetoken.username);
+    }
   }
 
   getToken(): string | null {
     return localStorage.getItem(this.JWT_TOKEN);
   }
-
+  getUsername():string|null{
+    return localStorage.getItem("username");
+  }
   register(username: string, email: string, password: string, confirmPassword: string, phoneNumber: string): Observable<any> {
     return this.http.post(this.registerurl, { username, email, password, confirmPassword, phoneNumber }, { responseType: 'text' });
   }

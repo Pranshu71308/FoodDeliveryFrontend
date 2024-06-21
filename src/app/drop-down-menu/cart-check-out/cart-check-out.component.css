@@ -1,0 +1,49 @@
+/* cart-check-out.component.css */
+
+/* Style for the modal body */
+.modal-body {
+    padding: 20px;
+  }
+  
+  /* Style for each item in the cart */
+  .cart-item {
+    margin-bottom: 10px;
+    border-bottom: 1px solid #ccc;
+    padding-bottom: 10px;
+  }
+  
+  /* Style for the total amount */
+  .cart-total {
+    font-weight: bold;
+    margin-top: 10px;
+    text-align: end;
+    margin-right: 14%;
+  }
+  /* cart-check-out.component.css */
+.cart-table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  
+  .cart-table th,
+  .cart-table td {
+    padding: 8px;
+    text-align: left;
+    border: none; /* No border */
+  }
+  
+  .cart-total {
+    margin-top: 20px;
+    font-weight: bold;
+  }
+  
+  .order-slider {
+    margin-top: 20px;
+  }
+  
+  .order-placed-msg {
+    color: green;
+    font-weight: bold;
+    margin-top: 10px;
+  }
+  

@@ -18,14 +18,14 @@ export class ForgotPasswordComponent {
   otpSent: boolean = false;
   otpVerified: boolean = false;
   otpError: string | null = null;
-  emailError: string | null = null; // Add this property to store email error messages
-  showChangePasswordForm: boolean = false; // Add property to show change password form
+  emailError: string | null = null; 
+  showChangePasswordForm: boolean = false;
   newPassword: string = "";
   confirmPassword: string = "";
 emailid:string="";
   constructor(private authService: AuthService, private router: Router) { }
   submitEmail() {
-    this.emailError = null; // Reset email error message
+    this.emailError = null; 
     this.emailid=this.email;
     console.log(this.emailid);
     this.authService.forgotPassword(this.email).subscribe({
@@ -45,7 +45,6 @@ emailid:string="";
       next: () => {
         this.otpVerified = true;
         this.showChangePasswordForm = true; // Show change password form after OTP verification
-
         this.otpError = null;
       },
       error: (err) => {

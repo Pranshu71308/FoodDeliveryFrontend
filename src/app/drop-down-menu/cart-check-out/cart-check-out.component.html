@@ -1,0 +1,49 @@
+<div class="modal-header">
+    <h4 class="modal-title">Checkout</h4>
+    <button type="button" class="btn-close" aria-label="Close" (click)="onCloseClick()"></button>
+</div>
+
+<!-- <div class="modal-body">
+    <table>
+        <tr>
+            <th>Item</th>
+            <th>Qty</th>
+            <th>Price</th>
+        </tr>
+        <tr>
+            <td></td>
+            <td></td>
+            <td></td>
+        </tr>
+    </table>
+    <div *ngFor="let item of cartItems" class="cart-item">
+    <p class="itemNameclass">{{ item.itemName }}</p><p class="itemPriceClass"> Price: {{ item.price }}</p><p class="itemQtyclass"> Quantity: {{ item.quantity }}</p>
+    </div>
+    <p class="cart-total">Total: {{ getTotalAmount() }} ₹</p>
+</div> -->
+<div class="modal-body">
+    <table class="cart-table">
+      <thead>
+        <tr>
+          <th>Item</th>
+          <th>Qty</th>
+          <th>Price</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let item of cartItems">
+          <td>{{ item.itemName }}</td>
+          <td>{{ item.quantity }}</td>
+          <td>{{ item.price }} ₹</td>
+        </tr>
+      </tbody>
+    </table>
+    <p class="cart-total">Total: {{ getTotalAmount() }} ₹</p>
+  </div>
+<div class="modal-footer">
+    <button type="button" class="btn btn-danger" (click)="onCloseClick()">Close</button>
+    <button type="button" class="btn btn-danger" (click)="onCloseClick()">Place Order</button>
+    <!-- <p>
+        Place Order
+    </p> -->
+</div>
