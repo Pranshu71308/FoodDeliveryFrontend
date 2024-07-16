@@ -3,18 +3,29 @@
     justify-content: space-between;
     align-items: center;
     padding: 10px 20px;
-    background-color: transparent;
+    background-color: rgba(0, 0, 0, 0.5);
+    /* Semi-transparent background */
+    backdrop-filter: blur(10px);
+    /* Blurry background effect */
     color: white;
-    position: absolute;
+    position: fixed;
+    top: 0;
     width: 100%;
     z-index: 2;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    /* Slight shadow for better separation */
 }
 
 .navbar-link {
     margin-right: 20px;
-    color: white;
+    color: rgb(255, 255, 255);
     text-decoration: none;
     cursor: pointer;
+    font-size: 1.3rem;
+    line-height: 1.5;
+    text-align: right;
+    font-weight: 300;
+    font-family: Okra, Helvetica, sans-serif !important;
 }
 
 .navbar-link:hover {
@@ -26,15 +37,13 @@
     font-size: 1.2rem;
     align-items: center;
     width: 100%;
-    font-family: Okra, Helvetica, sans-serif;;
+    font-family: Okra, Helvetica, sans-serif;
 }
 
 .profile-container {
-    position: relative;
+    display: flex;
     margin-left: auto;
     cursor: pointer;
-    display: inline-block;
-
 }
 
 .profile-info {
@@ -95,6 +104,8 @@
 
 .dropdown-menu.show {
     display: block;
+    margin-top: 42px;
+    margin-right: 12px;
 }
 
 .arrow-icon {
@@ -110,7 +121,6 @@
     padding: 0%;
     margin: 0%;
     z-index: 1;
-
 }
 
 
@@ -118,7 +128,7 @@
     position: absolute;
     top: 30%;
     left: 57%;
-    transform: translate(-50%, -50%);
+    transform: translate(-27%, -50%);
     color: white;
     font-size: 45px;
     font-weight: bolder;
@@ -142,7 +152,7 @@
 }
 
 .cards-container {
-    padding-top: 20px;
+    margin-top: 40px;
     display: flex;
     flex-wrap: wrap;
     gap: 30px;
@@ -152,9 +162,9 @@
 
 .card {
     background: #fff;
-    border-radius: 8px;
+    border-radius: 25px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    padding: 20px;
+    /* padding: 20px; */
     width: 500px;
     text-align: center;
     transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
@@ -164,6 +174,7 @@
 
 .card img {
     object-fit: cover;
+    border-radius: 25px;
     height: 158px;
 }
 
@@ -173,5 +184,12 @@
 }
 
 .card h2 {
-    padding-top: 3px;
+    padding-left: 20px;
+    padding-top: 10px;
+
+}
+
+.card p {
+    padding-left: 20px;
+
 }

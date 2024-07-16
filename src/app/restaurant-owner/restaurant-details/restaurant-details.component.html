@@ -1,0 +1,233 @@
+<app-navbar [showSearchBar]="false"></app-navbar>
+<div class="container">
+  <nav class="navbar">
+    <button class="navbar-button" [ngClass]="{ 'selected': selectedButton === 'profile' }"
+      (click)="selectButton('profile')">Profile</button>
+    <button class="navbar-button" [ngClass]="{ 'selected': selectedButton === 'Restaurant' }"
+      (click)="selectButton('Restaurant')">Restaurant</button>
+    <button class="navbar-button" [ngClass]="{ 'selected': selectedButton === 'Menu' }"
+      (click)="selectButton('Menu')">Menu</button>
+    <button class="navbar-button" [ngClass]="{ 'selected': selectedButton === 'pastOrders' }"
+      (click)="selectButton('pastOrders')">Orders</button>
+    <button class="navbar-button" [ngClass]="{ 'selected': selectedButton === 'Your Booking' }"
+      (click)="selectButton('Your Booking')">Booking</button>
+  </nav>
+
+  <div class="content" [@fadeInOut]>
+    <div class="card profile-card" *ngIf="selectedButton === 'profile'">
+      <div class="card-body">
+        <div class="body-headers">
+          <h2>Owner Profile</h2>
+          <div class="body-headers-icon">
+            <button (click)="toggleEditMode()" class="btn edit-button">
+              Edit Profile<i class="fas fa-pencil-alt edit-icon"></i>
+            </button>
+          </div>
+        </div>
+
+        <div class="profile-section" *ngIf="!editMode">
+          <p><strong>Username:</strong> {{ userDetails.userName }}</p>
+          <p><strong>Email:</strong> {{ userDetails.email }}</p>
+          <p><strong>Phone Number:</strong> {{ userDetails.phoneNumber }}</p>
+        </div>
+        <div class="profile-section" *ngIf="editMode">
+          <label><strong>Username:</strong></label>
+          <input [(ngModel)]="userDetails.userName" class="form-control" />
+          <label><strong>Email:</strong></label>
+          <input [(ngModel)]="userDetails.email" class="form-control" />
+          <label><strong>Phone Number:</strong></label>
+          <input [(ngModel)]="userDetails.phoneNumber" class="form-control" />
+        </div>
+        <button class="btn btn1 save-button" [disabled]="!editMode" (click)="saveChanges()">Save changes</button>
+      </div>
+      <hr>
+    </div>
+    <div class="content" [@fadeInOut]>
+      <div class="card-body" *ngIf="selectedButton === 'Restaurant'">
+        <div class="body-headers">
+          <h2>Restaurant Detail</h2>
+          <div class="body-headers-icon">
+            <button (click)="toggleEditMode1()" class="btn edit-button">
+              Edit Details<i class="fas fa-pencil-alt edit-icon"></i>
+            </button>
+          </div>
+        </div>
+        <div class="profile-section" *ngIf="!editModerestaurant">
+          <h5 class="card-title">{{ updatedRestaurantDetails.restaurantName }}</h5>
+          <h6 class="card-subtitle mb-2 text-muted">{{ restaurantDetails.location }}</h6>
+          <h6 class="card-subtitle mb-2 text-muted">{{ convertTo12HourFormat(restaurantDetails.openingTime) }}</h6>
+          <h6 class="card-subtitle mb-2 text-muted">{{ convertTo12HourFormat(restaurantDetails.closingTime) }}</h6>
+          <h6 class="card-subtitle mb-2 text-muted">{{ formatDate(restaurantDetails.closedStartDate) }}</h6>
+          <h6 class="card-subtitle mb-2 text-muted">{{ formatDate(restaurantDetails.closedEndDate) }}</h6>
+          <h6 class="card-subtitle mb-2 text-muted">Status: {{ checkRestaurantStatus() }}</h6>
+
+        </div>
+        <div class="profile-section" *ngIf="editModerestaurant">
+          <label><strong>Restaurant Name:</strong></label>
+          <input [(ngModel)]="updatedRestaurantDetails.restaurantName" name="restaurantName" class="form-control" />
+          <div *ngIf="formSubmitted && !updatedRestaurantDetails.restaurantName" class="text-danger">
+            Restaurant Name is required.
+          </div>
+
+          <label><strong>Location:</strong></label>
+          <input [(ngModel)]="updatedRestaurantDetails.location" name="location" class="form-control" />
+          <div *ngIf="formSubmitted && !updatedRestaurantDetails.location" class="text-danger">
+            Location is required.
+          </div>
+
+          <label><strong>Opening Time:</strong></label>
+          <input type="time" [(ngModel)]="updatedRestaurantDetails.openingTime" name="openingTime"
+            class="form-control" />
+          <div *ngIf="formSubmitted && !updatedRestaurantDetails.openingTime" class="text-danger">
+            Opening Time is required.
+          </div>
+          <div *ngIf="opentimeError">
+            <p class="text-danger">Opening time and closing time cannot be 00:00.</p>
+          </div>
+          <label><strong>Closing Time:</strong></label>
+          <input type="time" [(ngModel)]="updatedRestaurantDetails.closingTime" name="closingTime"
+            class="form-control" />
+          <div *ngIf="formSubmitted && !updatedRestaurantDetails.closingTime" class="text-danger">
+            Closing Time is required.
+          </div>
+          <div *ngIf="closetimeError">
+            <p class="text-danger">Opening time and closing time cannot be 00:00.</p>
+          </div>
+          <label><strong>Closing Dates:</strong></label>
+          <label><strong>From:</strong></label>
+          <input type="date" [(ngModel)]="updatedRestaurantDetails.closedStartDate" name="closingStartDate"
+            class="form-control" [min]="today" (ngModelChange)="validateClosingStartDate($event)" required />
+          <label><strong>To:</strong></label>
+          <input type="date" [(ngModel)]="updatedRestaurantDetails.closedEndDate" name="closingEndDate"
+            class="form-control" [min]="updatedRestaurantDetails.closingStartDate"
+            (ngModelChange)="validateClosingEndDate($event)" required />
+          <div *ngIf="closingStartDateError" class="text-danger">
+            Please select a date on or after today.
+          </div>
+          <div *ngIf="closingEndDateError" class="text-danger">
+            Please select a date on or after the From date.
+          </div>
+          <div *ngIf="sameStartDateAndEndDateError" class="text-danger">
+            Start Date and End Date cannot be the same.
+          </div>
+        </div>
+        <p class="card-text"><strong>Ratings:</strong> {{ updatedRestaurantDetails.ratings }}<br></p>
+        <button class="btn btn1 save-button" [disabled]="!editModerestaurant" (click)="saveRestaurantChanges()">Save
+          changes</button>
+      </div>
+    </div>
+    <div class="content" [@fadeInOut]>
+      <div class="card" *ngIf="selectedButton === 'Menu'">
+        <div class="order-cards-container">
+          <ng-container *ngIf="menuItems.length > 0; else emptyState">
+            <div *ngFor="let item of menuItems; let i = index" class="order-card">
+              <div class="order-summary" *ngIf="editIndex !== i; else editMode">
+                <div class="item-image">
+                  <img *ngIf="item.foodImage && !isImageSaved" [src]="'data:foodImage/jpeg;base64,' + item.foodImage"
+                    alt="Restaurant Image">
+                </div>
+                <p>Item Name: {{ item.itemName }}</p>
+                <p>Price: {{ item.price }}</p>
+                <p>Description: {{ item.description }}</p>
+                <p>Category: {{ item.category }}</p>
+                <button (click)="toggleEditMenuMode(i)" class="btn edit-button">
+                  Edit Menu<i class="fas fa-pencil-alt edit-icon"></i>
+                </button>
+              </div>
+              <ng-template #editMode>
+                <div class="order-summary">
+                  <div class="item-image">
+                    <img *ngIf="item.foodImage && !isImageSaved" [src]="'data:foodImage/jpeg;base64,' + item.foodImage"
+                      alt="Restaurant Image">
+                  </div>
+                  <div class="Edit-values">
+                    <div class="form-group">
+                      <label>Item Name:</label>
+                      <input type="text" class="form-control" [(ngModel)]="item.itemName">
+                    </div>
+                    <div class="form-group">
+                      <label>Price:</label>
+                      <input type="text" class="form-control" [(ngModel)]="item.price">
+                    </div>
+                    <div class="form-group">
+                      <label>Description:</label>
+                      <input type="text" class="form-control" [(ngModel)]="item.description">
+                    </div>
+                    <div class="form-group">
+                      <label>Category:</label>
+                      <input type="text" class="form-control" [(ngModel)]="item.category">
+                    </div>
+                    <button (click)="toggleEditMenuMode(i)" class="btn edit-button">
+                      Save <i class="fas fa-save edit-icon"></i>
+                    </button>
+                  </div>
+
+                </div>
+              </ng-template>
+            </div>
+          </ng-container>
+          <ng-template #emptyState>
+            <img src="../../../assets/no-item-found-here.png" alt="No menu items found" class="empty-image">
+          </ng-template>
+        </div>
+      </div>
+    </div>
+
+    <div class="content" [@fadeInOut]>
+      <div class="card" *ngIf="selectedButton === 'pastOrders'">
+        <div class="order-cards-container">
+          <ng-container *ngIf="pastOrders.length > 0; else emptyState">
+            <div *ngFor="let order of pastOrders" class="order-card">
+              <div class="order-summary">
+                <p>Order ID: {{ order.orderId }}</p>
+                <p>Total Price: {{ order.totalPrice }}</p>
+                <p>Date: {{ order.dateTime | date:'dd MMM:YYYY' }}</p>
+                <p>Time: {{ order.dateTime | date:'h:mm a' }}</p> <!-- Format time in 12-hour with AM/PM -->
+                <p>Address: {{ order.address }}</p>
+              </div>
+              <div class="show-more-less-buttons">
+                <button class="btn btn1" (click)="showOrderSummary(order,userDetails,pastOrders)">
+                  Show More
+                </button>
+              </div>
+
+              <div class="items-list" *ngIf="currentExpandedTransaction?.[order.orderId]">
+                <div *ngFor="let item of order.items" class="item-details">
+                  <hr>
+                  <p>Item Name: {{ item.itemName }}</p>
+                  <p>Quantity: {{ item.quantity }}</p>
+                  <p>Price: {{ item.menuItemPrice }}</p>
+                </div>
+              </div>
+            </div>
+          </ng-container>
+          <ng-template #emptyState>
+            <img src="../../../assets/no-item-found-here.png" alt="No past orders" class="empty-image">
+          </ng-template>
+        </div>
+      </div>
+    </div>
+    <div class="card" *ngIf="selectedButton === 'Your Booking'">
+      <div class="order-cards-container">
+        <ng-container *ngIf="bookings.length > 0; else noBookings">
+          <div *ngFor="let booking of bookings" class="order-card">
+            <div class="booking-summary">
+              <h3>Booking ID: {{ booking.userBookedTableId }}</h3>
+              <p><strong>Date:</strong> {{ booking.bookingDate | date:'dd MMM:YYYY' }}</p>
+              <p><strong>Time:</strong> {{ booking.bookingTime }}</p>
+              <p><strong>Guests:</strong> {{ booking.guests }}</p>
+              <p><strong>Status:</strong> {{ booking.status }}</p>
+              <p><strong>Special Requests:</strong> {{ booking.specialRequest }}</p>
+              <p><strong>Order Number:</strong> {{ booking.OrderNumber }}</p>
+            </div>
+  
+          </div>
+        </ng-container>
+        <ng-template #noBookings>
+          <p>No bookings available.</p>
+        </ng-template>
+      </div>
+    </div>
+  </div>
+  
+  </div>

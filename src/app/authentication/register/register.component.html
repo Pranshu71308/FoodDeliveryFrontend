@@ -62,10 +62,13 @@
                             <label for="confirmPassword">Confirm Password</label>
                             <input type="password" class="form-control" id="confirmPassword" name="confirmPassword" [(ngModel)]="confirmPassword" placeholder="Confirm Password" required  autocomplete="off">
                         </div>
-
+                      
                         <button type="submit" class="btn btn-primary w-100">Register</button>
                     </form>
                     <span>Already have an account? <a class="reglink" routerLink="/authentication/login">Login here</a></span>
+                    <div *ngIf="errorMessage" class="error-message alert alert-danger mt-3">
+                        {{ errorMessage }}
+                      </div>
                 </div>
             </div>
     </div>

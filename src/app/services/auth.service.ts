@@ -7,7 +7,14 @@ import { jwtDecode } from 'jwt-decode';
 interface LoginResponse {
   token: string;
 }
-
+interface UserDetails {
+  userId: number;
+  username: string;
+  email: string;
+  phoneNumber: string;
+  address1: string;
+  address2: string;
+}
 @Injectable({
   providedIn: 'root'
 })
@@ -20,7 +27,9 @@ export class AuthService {
   private forgotPasswordUrl = `${this.apiurl}/Auth/forgot-password`;
   private verifyOtpUrl = `${this.apiurl}/Auth/verify-otp`;
   private resetPasswordUrl =  `${this.apiurl}/Auth/reset-password`;
-  private getFoodMenuUrl = `${this.apiurl}/api/food/GetFoodMenu`; // Update with your API endpoint
+  private getFoodMenuUrl = `${this.apiurl}/api/food/GetFoodMenu`;
+  private getUserDetailsUrl = `${this.apiurl}/api/Users/GetUserDetails`;
+  private UpdateUserDetails = `${this.apiurl}/Auth/UpdateUserDetails`;
 
   constructor(private http: HttpClient) { }
 
@@ -55,6 +64,7 @@ export class AuthService {
 
   getToken(): string | null {
     return localStorage.getItem(this.JWT_TOKEN);
+    
   }
   getUsername():string|null{
     return localStorage.getItem("username");
@@ -65,6 +75,8 @@ export class AuthService {
 
   logout() {
     localStorage.removeItem(this.JWT_TOKEN);
+    localStorage.removeItem("username");
+    localStorage.removeItem("userid");
     this.isAuthenticatedSubject.next(false);
   }
   resetPassword(email: string, newPassword: string): Observable<any> {
@@ -74,4 +86,22 @@ export class AuthService {
     const url = `${this.getFoodMenuUrl}/${restaurantId}`;
     return this.http.get<any[]>(url);
   }
+  getUserDetails(userId: number): Observable<any> {
+    const url = `${this.apiurl}/Auth/GetUserDetails/${userId}`; 
+    return this.http.get<any>(url).pipe(
+      catchError((error: HttpErrorResponse) => {
+        console.error('Error fetching user details:', error);
+        return throwError('Error fetching user details. Please try again later.');
+      })
+    );
+  }
+  updateUserDetails(userDetailsToUpdate: any): Observable<any> {
+    console.log(userDetailsToUpdate);
+    return this.http.post(this.UpdateUserDetails, userDetailsToUpdate, { responseType: 'text' }).pipe(
+        catchError((error: HttpErrorResponse) => {
+            return throwError(error);
+        })
+    );
+}
+
 }

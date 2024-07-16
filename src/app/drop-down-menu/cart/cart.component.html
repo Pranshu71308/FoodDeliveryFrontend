@@ -1,35 +1,4 @@
-   <!-- <div class="cart-container" *ngIf="cartItems.length > 0; else emptyCart">
-    <div class="cart-header">Your Cart</div>
-    <div *ngFor="let item of cartItems" class="cart-item">
-      <div class="item-details">
-        <img *ngIf="item.foodImage" [src]="'data:image/jpeg;base64,' + item.foodImage" alt="Food Image">
-        <div class="item-info">
-          <div class="item-name">{{ item.itemName }}</div>
-          <div class="item-quantity">Quantity: {{ item.quantity }}</div>
-          <div class="item-price">Price: {{ item.price }}</div>
-        </div>
-      </div>
-      <div class="quantity-selector">
-        <button class="quantity-button" (click)="decreaseQuantity(item)">-</button>
-        <span class="quantity-value">{{ item.quantity || 0 }}</span>
-        <button class="quantity-button" (click)="increaseQuantity(item)">+</button>
-      </div>
-    </div>
-    <div class="cart-total">
-      Total: {{ calculateTotal() }}₹
-    </div>
-    <div class="action-buttons">
-      <button class="checkout-button">Checkout</button>
-    </div>
-  </div>
-  <ng-template #emptyCart>
-    <div class="empty-cart">
-      <img src="../../../assets/EmptyCart2.gif">
-      <p>I am empty.</p>
-      <p>Please Fill me</p>
-    </div>
-  </ng-template>
-   -->
+<app-navbar></app-navbar>
   <div class="cart-container" *ngIf="cartItems.length > 0; else emptyCart">
   <div class="cart-header">Your Cart</div>
   <div *ngFor="let item of cartItems" class="cart-item">
@@ -67,3 +36,4 @@
     <p>Please add items to your cart.</p>
   </div>
 </ng-template>
+<!-- <div id="maps" style="height: 400px;"></div> -->

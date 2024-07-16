@@ -1,49 +1,183 @@
-/* cart-check-out.component.css */
+/* 
 
-/* Style for the modal body */
-.modal-body {
-    padding: 20px;
-  }
-  
-  /* Style for each item in the cart */
-  .cart-item {
-    margin-bottom: 10px;
-    border-bottom: 1px solid #ccc;
-    padding-bottom: 10px;
-  }
-  
-  /* Style for the total amount */
-  .cart-total {
-    font-weight: bold;
-    margin-top: 10px;
-    text-align: end;
-    margin-right: 14%;
-  }
-  /* cart-check-out.component.css */
+
+.cart-item {
+  margin-bottom: 10px;
+  border-bottom: 1px solid #ccc;
+  padding-bottom: 10px;
+}
+
+.cart-total {
+  font-weight: bold;
+  margin-top: 10px;
+  text-align: end;
+  margin-right: 14%;
+}
+
 .cart-table {
-    width: 100%;
-    border-collapse: collapse;
-  }
-  
-  .cart-table th,
-  .cart-table td {
-    padding: 8px;
-    text-align: left;
-    border: none; /* No border */
-  }
-  
-  .cart-total {
-    margin-top: 20px;
-    font-weight: bold;
-  }
-  
-  .order-slider {
-    margin-top: 20px;
-  }
-  
-  .order-placed-msg {
-    color: green;
-    font-weight: bold;
-    margin-top: 10px;
-  }
-  
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.cart-table th,
+.cart-table td {
+  padding: 8px;
+  text-align: left;
+  border: none;
+}
+
+.cart-total {
+  margin-top: 20px;
+  font-weight: bold;
+}
+
+.order-slider {
+  margin-top: 20px;
+}
+
+.order-placed-msg {
+  color: green;
+  font-weight: bold;
+  margin-top: 10px;
+}
+
+.address-btn {
+  margin-bottom: 10px;
+  width: 100%;
+}
+
+.cart-table {
+  width: 100%;
+  margin-bottom: 10px;
+}
+
+.cart-total {
+  margin-top: 10px;
+  font-weight: bold;
+}
+.address-buttons{
+  display: flex;
+  justify-content: space-evenly;
+}
+.address-buttons .btn-danger{
+  background-color: rgb(240, 106, 106);
+}
+.Select-address{
+  font-family: Okra, Helvetica, sans-serif;
+  font-weight: bold;
+  color: #777;
+}
+.address-buttons .btn{
+  color: rgb(240, 106, 106);
+  font-family: Okra, Helvetica, sans-serif;
+  border-color: rgb(240, 106, 106);
+  width: 250px;
+} */
+.hidden {
+  display: none;
+}
+
+.modal-header,
+.modal-body,
+.modal-footer {
+  display: flex;
+  align-items: center;
+  text-align: center;
+}
+
+.modal-body {
+  overflow: hidden;
+  position: relative;
+  height: 255px;
+}
+
+.section {
+  position: absolute;
+  width: 100%;
+  opacity: 0;
+  transition: opacity 0.5s, transform 0.5s;
+}
+
+.section.active {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+.section.inactive-left {
+  opacity: 0;
+  transform: translateX(-100%);
+}
+
+.section.inactive-right {
+  opacity: 0;
+  transform: translateX(100%);
+}
+
+.cart-table {
+  width: 100%;
+  margin-bottom: 20px;
+  border-collapse: collapse;
+}
+
+.cart-table th,
+.cart-table td {
+  padding: 10px;
+  border: 1px solid #ddd;
+}
+
+.cart-total {
+  font-weight: bold;
+  margin-top: 10px;
+  margin-bottom: 20px;
+}
+
+.select-address {
+  margin-bottom: 10px;
+  font-weight: bold;
+}
+
+.address-buttons {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 20px;
+}
+
+.address-buttons .btn {
+  margin: 0 10px;
+}
+
+.btn {
+  margin: 5px;
+  transition: background-color 0.3s, transform 0.3s;
+}
+.btn-outline-primary:focus{
+  background-color: rgb(255, 126, 139);
+  color: white !important;
+
+}
+.btn:hover {
+  transform: scale(1.05);
+  background-color: rgb(255, 126, 139);
+  color: white !important;
+
+}
+
+.address-buttons .btn {
+  color: rgb(240, 106, 106);
+  font-family: Okra, Helvetica, sans-serif;
+  border-color: rgb(240, 106, 106);
+  width: 250px;
+}
+
+.make-payment-btn .btn {
+  background-color: rgb(255, 126, 139);
+  color: white;
+  border-color: rgb(255, 126, 139);
+
+}
+
+.modal-footer .btn {
+  /* background-color: rgb(255, 126, 139); */
+  color: rgb(255, 126, 139);
+  border-color: rgb(255, 126, 139);
+}

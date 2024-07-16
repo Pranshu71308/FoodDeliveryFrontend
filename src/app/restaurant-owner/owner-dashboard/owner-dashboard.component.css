@@ -1,0 +1,71 @@
+  .container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin: 20px;
+    margin-top: 80px;
+    gap: 20px;
+}
+
+.horizontal-card {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    max-width: 800px;
+    height: 200px;
+    margin: 15px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+    overflow: hidden;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    background-color: #fff;
+}
+
+.horizontal-card:hover {
+    transform: scale(1.05);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
+}
+
+.card-img-left {
+    width: 200px;
+    height: 200px;
+    object-fit: cover;
+}
+
+.card-body {
+    cursor: pointer;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    flex-grow: 1;
+}
+
+.card-title, .card-subtitle {
+    text-transform: capitalize;
+    margin-bottom: 10px;
+}
+
+.card-title {
+    font-size: 1.5em;
+    font-weight: bold;
+    color: #333;
+}
+
+.card-subtitle {
+    font-size: 1.2em;
+    font-weight: 500;
+    color: #777;
+}
+
+.card-text {
+    font-size: 1em;
+    color: #555;
+}
+
+.restaurant-image {
+    width: 200px;
+    height: 200px;
+    object-fit: cover;
+    border-radius: 10px;
+}

@@ -1,19 +1,41 @@
+@import "@angular/material/prebuilt-themes/indigo-pink.css";
+
 .custom-snackbar {
-  background-color: #323232; /* Dark background */
-  color: #ffffff; /* White text */
-  font-size: 16px; /* Increase font size */
-  border-radius: 8px; /* Rounded corners */
-  padding: 16px; /* Add padding */
-  z-index: 1; /* Ensure it appears above other content */
-  position: fixed; /* Fixed position to stay visible */
-  bottom: 20px; /* Position from the top of the viewport */
-  left: 35%; /* Center horizontally */
-  transform: translateX(-50%); /* Center horizontally */
-  max-width: 100%; /* Limit width to prevent stretching */
-  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2); /* Optional: Add shadow for depth */
+  background-color: #323232;
+  /* Dark background */
+  color: #ffffff;
+  /* White text */
+  font-size: 16px;
+  /* Increase font size */
+  border-radius: 8px;
+  /* Rounded corners */
+  padding: 16px;
+  /* Add padding */
+  z-index: 1;
+  /* Ensure it appears above other content */
+  position: fixed;
+  /* Fixed position to stay visible */
+  bottom: 20px;
+  /* Position from the top of the viewport */
+  left: 35%;
+  /* Center horizontally */
+  transform: translateX(-50%);
+  /* Center horizontally */
+  max-width: 100%;
+  /* Limit width to prevent stretching */
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+  /* Optional: Add shadow for depth */
 }
 
 .custom-snackbar .mat-simple-snackbar-action {
-  color: #ff4081; /* Custom action button color */
-  text-transform: uppercase; /* Optional: Uppercase action button text */
+  color: #ff4081;
+  /* Custom action button color */
+  text-transform: uppercase;
+  /* Optional: Uppercase action button text */
+}
+
+body {
+  font-family: Okra, Helvetica, sans-serif !important;
+  
+
 }

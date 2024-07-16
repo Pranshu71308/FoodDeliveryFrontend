@@ -1,182 +1,311 @@
 .navbar {
-    /* background-color: #f0f0f0; */
-    padding: 10px 20px;
-    display: flex;
-    justify-content: space-between; /* Align items to left, center, and right */
-    align-items: center; /* Center vertically */
-    height: 50px;
-    position: fixed; /* Fixed position */
-    width: 100%; /* Full width */
-    top: 0; /* Stick to top */
-    z-index: 1000; /* Ensure it's above other content */
+  padding: 0 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 70px;
+  position: fixed;
+  width: 100%;
+  top: 0;
+  z-index: 1000;
+  background-color: #fff;
+  border-bottom: 1px solid #ddd;
 }
 
 .navbar-content {
-    display: contents;
-    align-items: center;
-    font-family: Okra, Helvetica, sans-serif;;
-
+  display: flex;
+  width: 100%;
+  align-items: center;
+  font-family: Okra, Helvetica, sans-serif;
 }
 
 .left-links {
-    display: flex;
+  display: flex;
 }
 
 .navbar-link {
-    margin-right: 20px;
-    color: black; 
-    text-decoration: none;
-    cursor: pointer;
+  margin-right: 20px;
+  color: #333;
+  text-decoration: none;
+  cursor: pointer;
+  font-size: 1.1rem;
+  transition: color 0.3s;
 }
-.navbar-link .Home{
-    font-size: 1.5rem;
-    font-weight: bold;
-    margin-right: 20px;
+
+.navbar-link.Home {
+  font-size: 1.5rem;
+  font-weight: bold;
+  margin-right: 20px;
 }
+
 .navbar-link:hover {
-    text-decoration: underline;
+  color: #4CAF50;
+}
+
+.center-search {
+  display: flex;
+  align-items: center;
+  border-radius: 0.8rem;
+  box-shadow: rgba(28, 28, 28, 0.08) 0px 2px 8px;
+  border: 1px solid #E8E8E8;
+  padding: 5px 10px;
+  margin-left: 95px;
+
+}
+
+.location-dropdown {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.input-container {
+  display: flex;
+  align-items: center;
+  position: relative;
+}
+
+.input-container input[type="text"] {
+  width: 100%;
+  padding-right: 30px;
+  height: 40px;
+  border: none;
+  outline: none;
+  font-size: 1rem;
+}
+
+.dropdown-button {
+  position: absolute;
+  right: 5px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 16px;
+  height: 40px;
+}
+
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: #f9f9f9;
+  min-width: 160px;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+  z-index: 1;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-top: 5px;
+}
+
+.dropdown-content.show {
+  display: block;
+  width: 230px;
+}
+
+.dropdown-content a {
+  color: #333;
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+}
+
+.dropdown-content a:hover {
+  background-color: #f1f1f1;
+}
+
+.vertical-line {
+  height: 40px;
+  width: 1px;
+  background-color: #CFCFCF;
+  margin: 0 10px;
 }
 
 .search-bar {
-    width: 100rem;
-    max-width: 600px;
-    padding: 8px 16px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
+  width: 25rem;
+  max-width: 600px;
+  padding: 8px 16px;
+  border: none;
+  border-radius: 4px;
+  outline: none;
+  font-size: 1rem;
 }
 
+/* Profile Container */
 .profile-container {
-    position: relative;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
+  position: relative;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  margin-left: auto;
 }
 
 .profile-info {
-    display: flex;
-    align-items: center;
-    margin-right: 10px; /* Adjust space between username and arrow */
+  display: flex;
+  align-items: center;
+  margin-right: 10px;
 }
 
 .profile-icon {
-    font-size: 24px;
-    color: black; /* Adjust icon color */
-    margin-right: 8px;
+  font-size: 24px;
+  color: #333;
+  margin-right: 8px;
 }
 
 .profilename {
-    font-size: 1.2rem;
-    color: black; /* Adjust username color */
-    max-width: 9rem;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-}
-
-.dropdown-menu {
-    display: none;
-    position: absolute;
-    right: 0;
-    top: 100%;
-    background-color: white;
-    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
-    border-radius: 4px;
-    z-index: 10;
-    color: black;
-    margin-top: 10px;
-}
-
-.dropdown-menu a {
-    display: block;
-    padding: 12px 16px;
-    text-decoration: none;
-    color: black;
-    cursor: pointer;
-}
-
-.dropdown-menu a:hover {
-    background-color: #ddd;
-}
-
-.dropdown-menu.show {
-    display: block;
+  font-size: 1.2rem;
+  color: #333;
+  max-width: 9rem;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .arrow-icon {
-    transition: transform 0.3s ease;
+  transition: transform 0.3s ease;
 }
 
 .arrow-icon.rotate {
-    transform: rotate(180deg);
+  transform: rotate(180deg);
 }
 
+.dropdown-menu {
+  display: none;
+  position: absolute;
+  right: 0;
+  top: 100%;
+  background-color: white;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+  border-radius: 4px;
+  z-index: 10;
+  color: #333;
+  margin-top: 10px;
+}
+
+.dropdown-menu a {
+  display: block;
+  padding: 12px 16px;
+  text-decoration: none;
+  color: #333;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.dropdown-menu a:hover {
+  background-color: #ddd;
+}
+
+.dropdown-menu.show {
+  display: block;
+}
+
+/* Cards Container */
 .cards-container {
-    padding-top: 70px; /* Ensure cards don't get hidden behind the navbar */
-    display: flex;
-    flex-wrap: wrap;
-    gap: 20px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  gap: 20px;
+  padding: 20px;
+  margin-top: 70px;
 }
 
 .card {
-    width: calc(33.33% - 20px);
-    padding: 20px;
-    box-sizing: border-box;
-    text-align: center;
-    background: #fff;
-    border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
-}
-
-.card img {
-    width: 100%;
-    height: 200px;
-    object-fit: cover;
-
-    border-radius: 8px 8px 0 0;
-}
-
-.card h2 {
-    margin: 10px 0 5px;
-    font-family: Okra, Helvetica, sans-serif;
-    text-align: left;
-    font-size: 30px;
-}
-
-.card p {
-    margin: 5px 0;
-    font-family: Okra, Helvetica, sans-serif;
-    text-align: left;
-}
-
-.left-aligned {
-    font-family: Okra, Helvetica, sans-serif;
-    text-align: left;
-}
-
-.rating-container {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    margin-top: 5px;
-}
-
-.rating-box {
-    background-color: #4CAF50;
-    color: white;
-    padding: 5px 10px;
-    border-radius: 5px;
-    font-size: 14px;
-    font-weight: bold;
-    display: flex;
-    align-items: center;
-}
-
-.rating-box i {
-    margin-right: 5px;
+  background-color: #fff;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  width: 350px;
+  cursor: pointer;
+  transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
 }
 
 .card:hover {
-    transform: scale(1.03);
-    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+  transform: scale(1.05);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.image-container {
+  width: 100%;
+  height: 200px;
+  overflow: hidden;
+}
+
+.image-container img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.card h2 {
+  margin: 16px;
+  font-size: 1.5em;
+  color: #333;
+}
+
+.card .left-aligned {
+  margin: 0 16px;
+  color: #666;
+  font-size: 1em;
+}
+
+.rating-container {
+  display: flex;
+  align-items: center;
+  margin: 16px;
+}
+
+.rating-box {
+  background-color: #4CAF50;
+  color: #fff;
+  padding: 4px 8px;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+}
+
+.rating-box i {
+  margin-right: 4px;
+}
+
+/* Media Queries */
+@media (max-width: 768px) {
+  .center-search {
+      flex-direction: column;
+      align-items: flex-start;
+  }
+
+  .search-bar {
+      width: 100%;
+      margin-top: 10px;
+  }
+
+  .navbar-link {
+      font-size: 1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .navbar {
+      padding: 0 10px;
+      height: 60px;
+  }
+
+  .navbar-link {
+      margin-right: 10px;
+      font-size: 0.9rem;
+  }
+
+  .center-search {
+      flex-direction: column;
+      align-items: flex-start;
+  }
+
+  .search-bar {
+      width: 100%;
+      margin-top: 10px;
+  }
+
+  .card {
+      width: 100%;
+      margin: 0 10px;
+  }
 }

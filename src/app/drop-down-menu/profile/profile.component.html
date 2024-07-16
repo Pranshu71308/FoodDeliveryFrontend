@@ -1,1 +1,124 @@
-<p>profile works!</p>
+<app-navbar [showSearchBar]="false"></app-navbar>
+<div class="container">
+  <nav class="navbar">
+    <button class="navbar-button" [ngClass]="{ 'selected': selectedButton === 'profile' }"
+      (click)="selectButton('profile')">Profile</button>
+    <button class="navbar-button" [ngClass]="{ 'selected': selectedButton === 'pastOrders' }"
+      (click)="selectButton('pastOrders')">Past Orders</button>
+    <button class="navbar-button" [ngClass]="{ 'selected': selectedButton === 'Your Booking' }"
+      (click)="selectButton('Your Booking')">Your Booking</button>
+    <button class="navbar-button" [ngClass]="{ 'selected': selectedButton === 'bookmarks' }"
+      (click)="selectButton('bookmarks')">Bookmarks</button>
+  </nav>
+
+  <div class="content" [@fadeInOut]>
+    <div class="card" *ngIf="selectedButton === 'profile'">
+      <h1>User Profile</h1>
+      <p><strong>Username:</strong> {{ userDetails.userName }}</p>
+      <p><strong>Email:</strong> {{ userDetails.email }}</p>
+      <p><strong>Phone Number:</strong> {{ userDetails.phoneNumber }}</p>
+      <p><strong>Address 1:</strong> {{ userDetails.address1 }}</p>
+      <p><strong>Address 2:</strong> {{ userDetails.address2 }}</p>
+    </div>
+    <div class="content" [@fadeInOut]>
+      <div class="card" *ngIf="selectedButton === 'pastOrders'">
+        <div class="order-cards-container">
+          <ng-container *ngIf="pastOrders.length > 0; else emptyState">
+            <div *ngFor="let order of pastOrders" class="order-card">
+              <div class="order-summary">
+                <div class="image-container">
+                  <img *ngIf="order.image" [src]="'data:image/jpeg;base64,' + order.image" alt="Restaurant Image">
+                </div>
+                <div class="total-amount">
+                  Restaurant Name
+                </div>
+                <p>{{ order.restaurantName }}</p>
+                <div class="total-amount">
+                  TOTAL AMOUNT
+                </div>
+                <p><i class="fa-solid fa-indian-rupee-sign"></i> {{ order.totalPrice }}</p>
+                <div class="total-amount">
+                  Ordered On
+                </div>
+                <p>{{ order.date }} at {{order.time}}</p>
+                <p>{{order.address}}</p>
+              </div>
+              <div class="items-list" [class.expanded]="currentExpandedOrderId === order.orderId">
+                <div *ngFor="let item of order.items" class="item-details">
+                  <hr>
+                  <div class="item-order">
+                    <div class="total-amount">
+                      Item name
+                    </div>
+                    <p>{{ item.quantity }} <i class="fa-solid fa-xmark"></i>{{ item.itemName }}</p>
+                  </div>
+                  <div class="total-amount">
+                    Item Price
+                  </div>
+                  <p>{{ item.price }}</p>
+                </div>
+
+              </div>
+              <div class="show-more-less-buttons">
+                <button class="btn" *ngIf="!ratedOrders.includes(order.orderId)" (click)="OpenRatings(order.items[0].restaurantId, order.orderId)">
+                  Ratings
+                </button>
+                <button class="btn" (click)="showOrderSummary(order,userDetails)">
+                  Show More
+                </button>
+              </div>
+            </div>
+          </ng-container>
+          <ng-template #emptyState>
+            <img src="../../../assets/no-item-found-here.png" alt="No past orders" class="empty-image">
+          </ng-template>
+        </div>
+
+      </div>
+
+
+      <div class="card" *ngIf="selectedButton === 'bookmarks'">
+        <ng-container *ngIf="bookmarks.length > 0; else noBookmarks">
+          <div *ngFor="let bookmark of bookmarks">
+            <p><strong>Restaurant ID:</strong> {{ bookmark.restaurantID }}</p>
+            <p><strong>Restaurant Name:</strong> {{ bookmark.restaurantName }}</p>
+
+          </div>
+        </ng-container>
+        <ng-template #noBookmarks>
+          <p>No bookmarks found.</p>
+        </ng-template>
+      </div>
+      <div class="content" [@fadeInOut]>
+        <div class="card" *ngIf="selectedButton === 'Your Booking'">
+          <div class="order-cards-container">
+            <ng-container *ngIf="bookingDetails.length > 0; else noBookingDetails">
+              <div *ngFor="let booking of bookingDetails" class="order-card">
+                <div class="order-summary">
+                  <div class="image-container">
+                    <img *ngIf="booking.image" [src]="'data:image/jpeg;base64,' + booking.image" alt="Restaurant Image">
+                  </div>
+                  <div class="total-amount">
+                    Restaurant Name
+                  </div>
+                  <p>{{ booking.restaurantName }}</p>
+                  <div class="total-amount">
+                    TOTAL AMOUNT
+                  </div>
+                  <p><i class="fa-solid fa-indian-rupee-sign"></i> {{ booking.amount }}</p>
+                  <div class="total-amount">
+                    Booking for
+                  </div>
+                  <p>{{ booking.bookingDate }} at {{booking.bookingTime}}</p>
+                </div>
+              </div>
+            </ng-container>
+            <ng-template #noBookingDetails>
+              <p>No booking details found.</p>
+            </ng-template>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>

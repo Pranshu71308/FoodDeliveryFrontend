@@ -1,16 +1,16 @@
     <nav class="navbar">
         <div class="navbar-content">
-            <a routerLink="/" class="navbar-link">Home</a>
-            <a routerLink="/services" class="navbar-link">Services</a>
-            <a routerLink="/contact" class="navbar-link">Contact</a>
-              <div class="profile-container" (click)="toggleDropdown()">
-                <div class="profile-info">
+            <a routerLink="/contact" class="navbar-link" (click)="goToContact()">Contact</a>
+            
+              <div class="profile-container">
+                <a routerLink="/restaurant-owner/add-restaurant" style="margin-right: 40px;" (click)="addRestaurant()">Add restaurant</a>
+                <div class="profile-info" (click)="toggleDropdown()">
                   <i class="fas fa-user profile-icon"></i>
                   <div class="profilename">{{ username }}</div>
                   <i class="arrow-icon fas" [class]="isDropdownOpen ? 'fas fa-chevron-up' : 'fas fa-chevron-down'"></i>
                 </div>
                 <div class="dropdown-menu" [class.show]="isDropdownOpen">
-                  <a routerLink="/profile" (click)="toggleDropdown()">Profile</a>
+                  <a routerLink="/profile" (click)="toggleDropdownProfile()">Profile</a>
                   <a routerLink="/drop-down-menu/cart" (click)="toggleDropdownCart()">My Cart</a>
                   <hr>
                   <a (click)="logout()">Logout</a>
@@ -21,7 +21,7 @@
 
     <div class="container">
         <img src="../../../assets/zomatobackgroud.jpg" alt="Profile Photo" class="profile-photo">
-        <div class="text-overlay">Food Delivery System</div>
+        <div class="text-overlay">BigBite</div>
         <div class="text-overlay-1">Best food for you from best Restaurant</div>
     </div>
 
@@ -31,7 +31,7 @@
             <h2>Order Online</h2>
             <p>Get your food at your doorstep</p>
         </div>
-        <div class="card">
+        <div class="card" (click)="navigateTodineOut()">
             <img src="../../../assets/zomatobackgroud.jpg" alt="Dine Out Image" class="card-image">
             <h2>Dine Out</h2>
             <p>Get to visit some best restaurants</p>

@@ -1,0 +1,132 @@
+<div class="container">
+    <div class="sidebar">
+        <h2>Sections</h2>
+        <ul>
+            <li><a (click)="scrollToSection('#restaurantInfo')">Restaurant Information</a></li>
+            <li><a (click)="scrollToSection('#menuItems')">Menu Items</a></li>
+        </ul>
+    </div>
+    <div class="main-content">
+        <h1>Add Restaurant</h1>
+        <form [formGroup]="restaurantInfoForm" (ngSubmit)="onSubmit()">
+            <section id="restaurantInfo">
+                <h2>Restaurant Information</h2>
+                <div class="form-group">
+                    <label for="restaurantName">Restaurant Name</label>
+                    <input type="text" id="restaurantName" formControlName="restaurantName" class="form-control"
+                        required>
+                    <div class="validation-error"
+                        *ngIf="restaurantInfoForm.get('restaurantName')?.invalid && restaurantInfoForm.get('restaurantName')?.touched">
+                        Restaurant Name is required.
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="restaurantAddress">Restaurant Address</label>
+                    <input type="text" id="restaurantAddress" formControlName="address" class="form-control" required>
+                    <div class="validation-error"
+                        *ngIf="restaurantInfoForm.get('address')?.invalid && restaurantInfoForm.get('address')?.touched">
+                        Address is required.
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="restaurantAddress">Restaurant Image</label>
+                    <input type="file" (change)="CreateBase64String($event)" formControlName="resimage"
+                        class="fileInputProfile form-control">
+                    <div class="validation-error"
+                        *ngIf="restaurantInfoForm.get('resimage')?.invalid && restaurantInfoForm.get('resimage')?.touched">
+                        Restaurant Image is required.
+                    </div>
+                    <div class="img-space1">
+                        <ng-container *ngIf="isImageSaved;">
+                            <img [src]="cardImageBase64" style="width: 100px;height:100px;" />
+                        </ng-container>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="OpeningTime">Opening Time</label>
+                    <input type="time" id="OpeningTime" formControlName="OpeningTime" class="form-control" required>
+                    <div class="validation-error"
+                        *ngIf="restaurantInfoForm.get('OpeningTime')?.invalid && restaurantInfoForm.get('OpeningTime')?.touched">
+                        OpeningTime is required.
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="ClosingTime">Closing Time</label>
+                    <input type="time" id="ClosingTime" formControlName="ClosingTime" class="form-control" required>
+                    <div class="validation-error"
+                        *ngIf="restaurantInfoForm.get('ClosingTime')?.invalid && restaurantInfoForm.get('ClosingTime')?.touched">
+                        openingTime is required.
+                    </div>
+                </div>
+            </section>
+
+            <section id="menuItems">
+                <h2>Menu Items</h2>
+                <div formArrayName="menuItems">
+                    <div *ngFor="let menuItem of menuItems.controls; let i = index" [formGroupName]="i"
+                        class="menu-item">
+                        <div class="form-group">
+                            <label for="menuItemName-{{i}}">Item Name</label>
+                            <input type="text" id="menuItemName-{{i}}" formControlName="name" class="form-control"
+                                required>
+                            <div class="validation-error"
+                                *ngIf="menuItem.get('name')?.invalid && menuItem.get('name')?.touched">
+                                Item Name is required.
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="menuItemPrice-{{i}}">Price</label>
+                            <input type="number" id="menuItemPrice-{{i}}" formControlName="price" class="form-control"
+                                required>
+                            <div class="validation-error"
+                                *ngIf="menuItem.get('price')?.invalid && menuItem.get('price')?.touched">
+                                Price is required.
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="menuItemDescription-{{i}}">Description</label>
+                            <input type="text" id="menuItemDescription-{{i}}" formControlName="description"
+                                class="form-control" required>
+                            <div class="validation-error"
+                                *ngIf="menuItem.get('description')?.invalid && menuItem.get('description')?.touched">
+                                Description is required.
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="menuItemCategory-{{i}}">Category</label>
+                            <input type="text" id="menuItemCategory-{{i}}" formControlName="category"
+                                class="form-control" required>
+                            <div class="validation-error"
+                                *ngIf="menuItem.get('category')?.invalid && menuItem.get('category')?.touched">
+                                Category is required.
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="menuItemImage-{{i}}">Image</label>
+                            <input type="file" (change)="RestaurantImages($event,i)" formControlName="image"
+                                class="fileInputProfile form-control">
+                            <div class="validation-error"
+                                *ngIf="menuItem.get('image')?.invalid && menuItem.get('image')?.touched">
+                                Image is required.
+                            </div>
+                            <div class="img-space">
+                                <ng-container *ngIf="isImageSaved;">
+                                    <img [src]="restaurantImages[i]" style="width: 100px;height:100px;" />
+                                </ng-container>
+                            </div>
+                        </div>
+                        <button type="button" class="btn btn-remove" (click)="removeMenuItem(i)">Remove</button>
+                    </div>
+                </div>
+                <div class="Add-Menu">
+                    <button type="button" class="btn" (click)="addMenuItem()">
+                        <i class="fa-solid fa-plus"></i>
+                        Add Menu Item
+                    </button>
+                </div>
+            </section>
+
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </form>
+    </div>
+</div>

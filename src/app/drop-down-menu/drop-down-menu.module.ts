@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { DropDownMenuRoutingModule } from './drop-down-menu-routing.module';
+import { NavbarComponent } from '../layout/navbar/navbar.component';
 
 
 
@@ -8,7 +9,7 @@ import { DropDownMenuRoutingModule } from './drop-down-menu-routing.module';
     declarations: [],
     imports: [
         CommonModule,
-        DropDownMenuRoutingModule
+        DropDownMenuRoutingModule,
     ]
 })
 export class DropDownMenuModule { }

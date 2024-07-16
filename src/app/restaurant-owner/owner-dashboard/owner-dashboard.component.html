@@ -1,0 +1,17 @@
+<app-navbar></app-navbar>
+<div class="container">
+    <div *ngFor="let restaurant of restaurants" class="card horizontal-card">
+        <img *ngIf="restaurant.image" class="restaurant-image" [src]="'data:image/jpeg;base64,' + restaurant.image"
+            alt="Restaurant Image">
+        <div class="card-body" (click)="openRestaurantCard(restaurant)">
+            <h5 class="card-title">{{ restaurant.restaurantName }}</h5>
+            <h6 class="card-subtitle mb-2 text-muted">{{ restaurant.location }}</h6>
+            <p class="card-text">
+                <strong>Ratings:</strong> {{ restaurant.ratings }}<br>
+            </p>
+            <p class="text-{{ checkRestaurantStatus(restaurant) === 'Closed' ? 'danger' : 'success' }}">
+                <strong>Status:</strong> {{ checkRestaurantStatus(restaurant) }}
+            </p>
+        </div>
+    </div>
+</div>

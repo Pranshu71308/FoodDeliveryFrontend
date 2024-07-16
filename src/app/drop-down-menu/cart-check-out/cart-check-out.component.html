@@ -1,27 +1,10 @@
 <div class="modal-header">
-    <h4 class="modal-title">Checkout</h4>
-    <button type="button" class="btn-close" aria-label="Close" (click)="onCloseClick()"></button>
+  <h4 class="modal-title">Checkout</h4>
+  <button type="button" class="btn-close" aria-label="Close" (click)="onCloseClick()"></button>
 </div>
 
-<!-- <div class="modal-body">
-    <table>
-        <tr>
-            <th>Item</th>
-            <th>Qty</th>
-            <th>Price</th>
-        </tr>
-        <tr>
-            <td></td>
-            <td></td>
-            <td></td>
-        </tr>
-    </table>
-    <div *ngFor="let item of cartItems" class="cart-item">
-    <p class="itemNameclass">{{ item.itemName }}</p><p class="itemPriceClass"> Price: {{ item.price }}</p><p class="itemQtyclass"> Quantity: {{ item.quantity }}</p>
-    </div>
-    <p class="cart-total">Total: {{ getTotalAmount() }} ₹</p>
-</div> -->
 <div class="modal-body">
+  <div class="section" [ngClass]="getSectionClass(1)">
     <table class="cart-table">
       <thead>
         <tr>
@@ -40,10 +23,29 @@
     </table>
     <p class="cart-total">Total: {{ getTotalAmount() }} ₹</p>
   </div>
+
+  <div class="section" [ngClass]="getSectionClass(2)">
+    <div *ngIf="address1 && address2">
+      <p class="select-address">Select address for delivery:</p>
+      <div class="address-buttons">
+        <button type="button" class="btn btn-outline-primary" (click)="selectAddress(address1)">{{ address1 }}</button>
+        <button type="button" class="btn btn-outline-primary" (click)="selectAddress(address2)">{{ address2 }}</button>
+      </div>
+    </div>
+    <div *ngIf="!address1 || !address2">
+      <p>Please enter address details in your profile.</p>
+    </div>
+    <div class="make-payment-btn">
+      <button type="button" class="btn btn-danger" (click)="makePayment()">Place Order</button>
+    </div>
+
+  </div>
+
+  <!-- <div class="section" [ngClass]="getSectionClass(3)">
+  </div> -->
+</div>
+
 <div class="modal-footer">
-    <button type="button" class="btn btn-danger" (click)="onCloseClick()">Close</button>
-    <button type="button" class="btn btn-danger" (click)="onCloseClick()">Place Order</button>
-    <!-- <p>
-        Place Order
-    </p> -->
+  <button type="button" class="btn" (click)="prevSection()" *ngIf="currentSection > 1">← Previous</button>
+  <button type="button" class="btn" (click)="nextSection()" *ngIf="currentSection < 2">Next →</button>
 </div>

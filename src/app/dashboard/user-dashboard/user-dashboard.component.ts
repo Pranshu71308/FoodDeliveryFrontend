@@ -12,18 +12,44 @@ import { AuthService } from '../../services/auth.service';
 })
 export class UserDashboardComponent {
   isDropdownOpen = false;
+  userId: number | null = null; 
+
   username:string;
     constructor(private router: Router,private authService:AuthService) {
       this.username = authService.getUsername() || '';
     }
 
+    ngOnInit(): void {
+      this.userId = Number(localStorage.getItem('userid'));
+    }
   toggleDropdown() {
     this.isDropdownOpen = !this.isDropdownOpen;
   }
   toggleDropdownCart() {
     this.router.navigate(['/drop-down-menu/cart']);
   }
+  toggleDropdownProfile(): void {
+    this.authService.getUserDetails(this.userId!).subscribe({
+      next: (userDetails) => {
+        console.log(userDetails);
+        this.router.navigate(['/drop-down-menu/profile'], { state: { userDetails } });
+      },
+      error: (error) => {
+        console.error('Error fetching user details:', error);
+      }
+    });
+  }
+  addRestaurant(){
+    this.router.navigate(['restaurant-owner/add-restaurant']);
 
+  }
+  Home(){
+    this.router.navigate(['dashboard/user-dashboard']);
+  }
+  goToContact(){
+    console.log("MKLJHGCF");
+    this.router.navigate(['/dashboard/contact']);
+  }
   logout() {
     localStorage.clear();
     this.router.navigate(['authentication/login']);
@@ -32,5 +58,8 @@ export class UserDashboardComponent {
   navigateToOrderOnline() {
     console.log("In order online");
     this.router.navigate(['/dashboard/order-online']);
+  }
+  navigateTodineOut(){
+    this.router.navigate(['/dashboard/dine-out']);
   }
 }

@@ -2,89 +2,197 @@
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
 <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
 
-<nav class="navbar">
-  <label class="app-label">Food App</label>
-  <input type="text" placeholder="Search Restaurant..." (input)="filterRestaurants($event)" class="search-bar">
-  <div class="profile" (click)="toggleDropdown()">
-    <i class="fas fa-user profile-icon"></i>
-    <div class="dropdown-menu" [class.show]="isDropdownOpen">
-      <a routerLink="/drop-down-menu/profile" (click)="toggleDropdownProfile()">Profile</a>
-      <a routerLink="/drop-down-menu/cart" (click)="toggleDropdownCart()">My Cart</a>
-      <hr>
-      <a (click)="logout()">Logout</a>
-    </div>
-  </div>
-</nav>
-
-<div class="scrollable-gallery" [class.expanded]="isImagesSectionOpen">
-  <div *ngIf="filteredMenu && filteredMenu.length > 0" class="image-gallery">
-    <div class="gallery-image" *ngFor="let item of showAllImages ? filteredMenu : filteredMenu.slice(0, 3)">
-      <img *ngIf="item.foodImage" [src]="'data:image/jpeg;base64,' + item.foodImage" alt="Food Image">
-    </div>
-    <div *ngIf="filteredMenu.length > 4 && !showAllImages && !isImagesSectionOpen" class="gallery-image"
-      (click)="toggleShowAllImages()">
-      <img *ngIf="filteredMenu[3].foodImage" [src]="'data:image/jpeg;base64,' + filteredMenu[3].foodImage"
-        alt="Food Image">
-      <div class="more-images-overlay">+{{ filteredMenu.length - 4 }}</div>
-    </div>
-  </div>
-</div>
-<div class="restaurant-details">
-  <div class="restaurantname">
-    {{restaurantname}}
-    <div class="rating-container">
-      <div class="rating-box">
-        <i class="fas fa-star"></i> {{ ratings }}
+<app-navbar [showSearchBar]="false"></app-navbar>
+<div class="content">
+  <div class="scrollable-gallery" [class.expanded]="isImagesSectionOpen">
+    <div *ngIf="filteredMenu && filteredMenu.length > 0" class="image-gallery">
+      <div class="gallery-image" *ngFor="let item of showAllImages ? filteredMenu : filteredMenu.slice(0, 3)">
+        <img *ngIf="item.foodImage" [src]="'data:image/jpeg;base64,' + item.foodImage" alt="Food Image">
+      </div>
+      <div *ngIf="filteredMenu.length > 4 && !showAllImages && !isImagesSectionOpen" class="gallery-image more-images"
+        (click)="setActiveSection('images')">
+        <img *ngIf="filteredMenu[3].foodImage" [src]="'data:image/jpeg;base64,' + filteredMenu[3].foodImage"
+          alt="Food Image">
+        <div class="more-images-overlay">+{{ filteredMenu.length - 4 }}</div>
       </div>
     </div>
   </div>
-  <div class="restaurant-location">
-    {{location}} 
-  </div>
-  <div class="directions" (click)="showMaps()">
-    <i class="fas fa-directions"></i> Directions
-  </div>
-</div>
-<section class="section-links">
-  <a #overview (click)="setActiveSection('overview')">Overview</a>
-  <a #menu (click)="setActiveSection('menu')">Menu</a>
-  <a #images (click)="setActiveSection('images')">Images</a>
-</section>
 
-<div *ngIf="filteredMenu && filteredMenu.length > 0 && isMenuSectionOpen" class="menu-list" id="menu">
-  <ul>
-    <li *ngFor="let item of filteredMenu" class="menu-item">
-      <div class="item-image">
-        <img *ngIf="item.foodImage" [src]="'data:image/jpeg;base64,' + item.foodImage" alt="Restaurant Image">
-      </div>
-      <div class="item-details">
-        <div class="item-name">{{ item.itemName }}</div>
-        <div class="item-category">{{ item.category }}</div>
-        <div class="item-description">{{ item.description }}</div>
-        <div class="item-price">{{ formatCurrency(item.price) }}</div>
-        <div class="quantity-and-add">
-          <div class="quantity-selector">
-            <button class="quantity-button" (click)="decreaseQuantity(item)">-</button>
-            <span class="quantity-value">{{ item.quantity || 0 }}</span>
-            <button class="quantity-button" (click)="increaseQuantity(item)">+</button>
-          </div>
-          <button class="add-to-cart-button" (click)="addToCart(item)">Add to Cart</button>
+  <div class="restaurant-details">
+    <div class="restaurantname">
+      {{restaurantname}}
+      <div class="rating-container">
+        <div class="rating-box">
+          <i class="fas fa-star"></i> {{ ratings }}
         </div>
       </div>
-    </li>
-  </ul>
-</div>
+    </div>
+    <div class="restaurant-location">{{ location }}</div>
+    <div  *ngIf="checkRestaurantStatus(closedStartDate, closedEndDate) === 'Closed'">
+      <span class="text-{{checkRestaurantStatus(closedStartDate, closedEndDate) ==='Closed'? 'danger' : 'success' }}">
+        {{ checkRestaurantStatus(closedStartDate, closedEndDate) }} from {{ closedStartDate | date: 'dd/MM/yyyy' }} to {{ closedEndDate | date: 'dd/MM/yyyy' }}
+      </span>
+    </div>
 
-<div *ngIf="!isMenuSectionOpen && !isOverViewSectionOpen" class="images-list" id="imagepart">
-  <div *ngFor="let item of filteredMenu">
-    <img *ngIf="item.foodImage" [src]="'data:image/jpeg;base64,' + item.foodImage" alt="Food Image">
+    <div *ngIf="checkRestaurantStatus(closedStartDate, closedEndDate) !== 'Closed'">
+      <div class="opening-hours">
+        <span [ngClass]="getStatusClass(opening, closing)">
+          {{ getStatus(opening, closing) }}
+        </span>
+        - {{ convertTo12HourFormat(opening) }} - {{ convertTo12HourFormat(closing) }}
+      </div>
+    </div>
+
+    <div class="extra-buttons">
+      <div (click)="setActiveSection('overview')">
+        <button class="directions btn">
+          <i class="fas fa-directions"></i>
+          <div class="direction-text"> Directions</div>
+        </button>
+      </div>
+      <div (click)="SaveRestaurantOverView()">
+        <button class="directions btn">
+          <i class="{{ isBookmarked ? 'fa-solid fa-bookmark' : 'fa-regular fa-bookmark' }}"></i>
+          <div class="direction-text"> Bookmark</div>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <section class="section-links">
+    <a (click)="setActiveSection('overview')">Overview</a>
+    <a (click)="setActiveSection('menu')">Menu</a>
+    <a (click)="setActiveSection('images')">Images</a>
+    <a *ngIf="showBookSeat" (click)="setActiveSection('BookSeat')">Book Seat</a>
+  </section>
+  <hr>
+  <div *ngIf="filteredMenu && filteredMenu.length > 0 && isMenuSectionOpen" class="menu-list" id="menu">
+    <ul>
+      <li *ngFor="let item of filteredMenu" class="menu-item">
+        <div class="item-image">
+          <img *ngIf="item.foodImage" [src]="'data:image/jpeg;base64,' + item.foodImage" alt="Restaurant Image">
+        </div>
+        <div class="item-details">
+          <div class="item-name">{{ item.itemName }}</div>
+          <div class="item-category">{{ item.category }}</div>
+          <div class="item-description">{{ item.description }}</div>
+          <div class="item-price">{{ formatCurrency(item.price) }}</div>
+          <div *ngIf="!showBookSeat" class="quantity-and-add">
+            <div class="quantity-selector">
+              <button class="quantity-button" (click)="decreaseQuantity(item)">-</button>
+              <span class="quantity-value">{{ item.quantity || 0 }}</span>
+              <button class="quantity-button" (click)="increaseQuantity(item)">+</button>
+            </div>
+            <button class="add-to-cart-button" (click)="addToCart(item)">Add to Cart</button>
+          </div>
+        </div>
+      </li>
+    </ul>
+  </div>
+
+  <div *ngIf="!isMenuSectionOpen && !isOverViewSectionOpen && !isBookSeatSectionOpen" class="images-list" id="images">
+    <div *ngFor="let item of filteredMenu">
+      <img *ngIf="item.foodImage" [src]="'data:image/jpeg;base64,' + item.foodImage" alt="Food Image"
+        (click)="showBigImage(item.foodImage)">
+    </div>
+  </div>
+
+
+  <div *ngIf="!isMenuSectionOpen && !isImagesMenuSectionOpen && !isOverViewSectionOpen" class="overview-list"
+    id="overview">
+    <div class="select-slot-header">Select your booking details</div>
+
+    <div class="dropdown-book">
+      <mat-form-field appearance="fill">
+        <i class="fa-regular fa-calendar"></i>
+        <mat-select [(value)]="selectedDate" (selectionChange)="onDateChange()">
+          <mat-option *ngFor="let date of availableDates" [value]="date">{{ date }}</mat-option>
+        </mat-select>
+      </mat-form-field>
+      <mat-form-field appearance="fill">
+        <i class="fa-regular fa-clock "></i>
+        <mat-select [(value)]="selectedSlot">
+          <mat-option *ngFor="let time of availableSlot" [value]="time">{{ time }}</mat-option>
+        </mat-select>
+      </mat-form-field>
+      <mat-form-field appearance="fill">
+        <i class="fa-regular fa-user"></i>
+        <mat-select [(value)]="selectedGuests">
+          <mat-option *ngFor="let guest of availableGuests" [value]="guest">{{ guest }}</mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+
+    <div class="time-slot-area">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-6">
+            <div class="select-slot-header">
+              Select Slot:
+            </div>
+            <div class="btn-group">
+              <div class="Lunch-buttons" *ngIf="selectedSlot==='Lunch'">
+                <ng-container *ngFor="let slot of lunchSlots">
+                  <button type="button" class="btn" (click)="selectTimeSlot('Lunch', slot)">
+                    {{ slot }}
+                  </button>
+                </ng-container>
+              </div>
+              <div class="Dinner-buttons" *ngIf="selectedSlot==='Dinner'">
+                <ng-container *ngFor="let slot of dinnerSlots">
+                  <button type="button" class="btn btn-outline-primary" (click)="selectTimeSlot('Dinner', slot)">
+                    {{ slot }}
+                  </button>
+                </ng-container>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="checkout-btn">
+      <button class=" btn Dining-confirm-button" (click)="proceedToCart()">
+        Proceed to cart
+      </button>
+    </div>
+  </div>
+  <div *ngIf="isReviewBookingVisible">
+    <div class="review-heading">Review Booking Details</div>
+    <div class="review-details review-booking-section">
+      <p><i class="fa-regular fa-calendar"></i> {{ selectedDate }} at {{SelectedTimeSlot}}</p>
+      <p><i class="fa-solid fa-user-group"></i> {{ selectedGuests }}</p>
+      <p><i class="fa-solid fa-location-dot"></i> {{ restaurantname }}</p>
+      <p style="margin-left: 1rem;">{{ location }}</p>
+      <hr>
+      <div class="cover-charge">
+        <p>Cover charge</p>
+        <div class="cover-charge-sign">
+          <i class="fa-solid fa-indian-rupee-sign cover"></i>50
+        </div>
+      </div>
+      <p class="cover-amount">This amount will be adjusted in your final bill</p>
+    </div>
+    <div class="special-request-button">
+      <button class="btn note-button" (click)="toggleSpecialRequestBox()">
+        <i class="fa-solid fa-plus"></i>
+        Add special request
+      </button>
+    </div>
+    <div class="special-request-box" *ngIf="showSpecialRequestBox">
+      <textarea rows="4" placeholder="Enter your special request" [(ngModel)]="specialRequest"></textarea>
+    </div>
+    <div class="no-cancel-text">
+      The restaurant will try their best to allot your desired seat. However, no cancellation or refund will be possible
+      if your request is not met.
+    </div>
+    <div class="checkout-btn">
+      <button *ngIf="!isbooknowEnabled" class=" btn Dining-confirm-button" (click)="BookNow()">
+        Book Now
+      </button>
+    </div>
+  </div>
+
+  <div *ngIf="!isMenuSectionOpen  && !isImagesMenuSectionOpen && !isBookSeatSectionOpen">
+    <div id="maps" style="height: 500px;"></div>
   </div>
 </div>
-
-<div *ngIf="!isMenuSectionOpen && !isImagesMenuSectionOpen" class="overview-list" id="overviewpart">
-<div id="maps" style="height: 500px;">
-</div>
-</div>
-<!-- <div *ngIf="isOverViewSectionOpen" class="overview-list" id="overviewpart">
-  <div id="maps" style="height: 500px;"></div>
-</div> -->

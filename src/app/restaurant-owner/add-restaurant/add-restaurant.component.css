@@ -1,0 +1,188 @@
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+  }
+  
+  .web-backdrop {
+    position: relative;
+    background: url('../../../assets/restaurant2Image.jpeg') no-repeat center center;
+    background-size: cover;
+    height: 400px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    color: white;
+  }
+  
+  .content-overlay {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: rgba(0, 0, 0, 0.5);
+    padding: 20px;
+    border-radius: 10px;
+    z-index: 2;
+  }
+  
+  .content-overlay h1 {
+    font-size: 2.5rem;
+    margin-bottom: 10px;
+  }
+  
+  .content-overlay p {
+    font-size: 1rem;
+    margin-bottom: 10px;
+  }
+  
+  .content-overlay .btn {
+    background: rgb(240, 106, 106);
+    color: white;
+    padding: 10px 20px;
+    margin: 10px;
+    border: none;
+    cursor: pointer;
+  }
+  .content-overlay .btn:hover {
+    background: rgb(249, 54, 54);
+    color: white;
+  }
+  
+  .get-started-card {
+    position: relative;
+    top: -50px; 
+    z-index: 3;
+    width: 60%; 
+    margin: 0 auto 20px auto;
+  }
+  
+  .get-started {
+    background: white;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  .get-started h2 {
+    font-size: 2rem;
+    margin-bottom: 10px;
+  }
+  
+  .get-started p, .get-started ul {
+    font-size: 1rem;
+  }
+  
+  .get-started ul {
+    list-style-type: disc;
+    margin-left: 20px;
+  }
+  
+  .why-partner {
+    text-align: center;
+    margin-bottom: 20px;
+  }
+  
+  .why-partner h2 {
+    font-size: 2rem;
+    margin-bottom: 10px;
+  }
+  
+  .why-partner p {
+    font-size: 1rem;
+    margin-bottom: 20px;
+  }
+  
+  .business-cards {
+    display: flex;
+    justify-content: space-around;
+  }
+  
+  .business-cards .card {
+    background: #f8f8f8;
+    padding: 20px;
+    text-align: center;
+    flex: 1;
+    margin: 10px;
+  }
+  
+  .business-cards .card h3 {
+    font-size: 1.5rem;
+    margin-bottom: 10px;
+  }
+  
+  .business-cards .card p {
+    font-size: 1rem;
+  }
+  
+  .how-it-works {
+    text-align: center;
+    margin-bottom: 20px;
+  }
+  
+  .how-it-works h2 {
+    font-size: 2rem;
+    margin-bottom: 20px;
+  }
+  
+  .steps {
+    display: flex;
+    justify-content: space-around;
+  }
+  
+  .steps .step {
+    background: #f8f8f8;
+    padding: 20px;
+    flex: 1;
+    margin: 10px;
+  }
+  
+  .steps .step h3 {
+    font-size: 1.5rem;
+    margin-bottom: 10px;
+  }
+  
+  .steps .step p {
+    font-size: 1rem;
+  }
+  
+  .claim-restaurant {
+    text-align: center;
+    margin-bottom: 20px;
+  }
+  
+  .claim-restaurant h2 {
+    font-size: 2rem;
+    margin-bottom: 10px;
+  }
+  
+  .claim-restaurant p {
+    font-size: 1rem;
+    margin-bottom: 10px;
+  }
+  
+  .claim-restaurant input {
+    padding: 10px;
+    width: 80%;
+    max-width: 600px;
+    margin: 0 auto;
+  }
+  
+  .faq {
+    margin-top: 20px;
+  }
+  
+  .faq h2 {
+    font-size: 2rem;
+    margin-bottom: 10px;
+  }
+  
+  .faq .question {
+    margin-bottom: 10px;
+  }
+  
+  .faq .question p {
+    font-size: 1rem;
+  }
+  

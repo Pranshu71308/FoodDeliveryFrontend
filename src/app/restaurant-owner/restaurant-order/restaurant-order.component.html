@@ -1,0 +1,35 @@
+<div class="modal-header">
+    <h4 class="modal-title">Order Summary</h4>
+    <button type="button" class="btn-close" aria-label="Close" (click)="onCloseClick()"></button>
+  </div>
+  <div class="modal-body">
+    <div class="order-summary">
+        <div class="total-amount">Order Id</div>
+        <p>{{ order.orderId }}</p>
+      <div class="total-amount">Ordered On</div>
+      <p>{{ order.dateTime | date:'dd MMM:YYYY' }} at {{ order.dateTime | date:'h:mm a' }}</p>
+      <div class="total-amount">Delivered at</div>
+      <p>{{order.address}}</p>
+    </div>
+    <div class="items-list">
+      <div *ngFor="let item of order.items" class="item-details">
+        <hr>
+        <div class="item-order">
+          <p>{{ item.itemName }}</p>
+        </div>
+         <div class="each-item-price">
+            <p>{{ item.quantity }} <i class="fa-solid fa-xmark"></i> {{ item.price }}</p>
+            {{item.quantity * item.menuItemPrice}}
+         </div>
+      </div>
+    </div>
+    <hr>
+    <div class="grand-total">
+        <div class="total-amount">grand Total</div>
+        <p><i class="fa-solid fa-indian-rupee-sign"></i> {{ order.totalPrice }}</p>
+    </div>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn" (click)="modal.close('Close click')">Close</button>
+  </div>
+  

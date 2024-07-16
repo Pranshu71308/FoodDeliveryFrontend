@@ -18,15 +18,15 @@ export class ForgotPasswordComponent {
   otpSent: boolean = false;
   otpVerified: boolean = false;
   otpError: string | null = null;
-  emailError: string | null = null; 
+  emailError: string | null = null;
   showChangePasswordForm: boolean = false;
   newPassword: string = "";
   confirmPassword: string = "";
-emailid:string="";
+  emailid: string = "";
   constructor(private authService: AuthService, private router: Router) { }
   submitEmail() {
-    this.emailError = null; 
-    this.emailid=this.email;
+    this.emailError = null;
+    this.emailid = this.email;
     console.log(this.emailid);
     this.authService.forgotPassword(this.email).subscribe({
       next: () => {
@@ -63,17 +63,28 @@ emailid:string="";
       }
     }
   }
-  changePassword(newPassword:string,confirmPassword:string) {
-    console.log("New pass"+newPassword);
+  moveToPrevious(event: any, index: number) {
+    if (event.key === 'Backspace' && index > 0) {
+      const prevInput = document.querySelector(`input[name=otp${index - 1}]`);
+      if (prevInput) {
+        (prevInput as HTMLInputElement).focus();
+        (prevInput as HTMLInputElement).value = '';
+      }
+    }
+  }
+  changePassword(newPassword: string, confirmPassword: string) {
     if (this.newPassword !== this.confirmPassword) {
       console.error("Passwords do not match.");
       return;
     }
-    else{
-      console.log("NEWPASS"+newPassword);      
+    if (!this.isValidPassword(newPassword)) {
+      console.error("Password must be at least 6 characters long, contain at least one special character, one uppercase letter, and one number.");
+      return;
+    }
+    else {
       this.authService.resetPassword(this.emailid, newPassword).subscribe({
         next: () => {
-          console.log("Password changed successfully."); 
+          console.log("Password changed successfully.");
           this.router.navigate(['/login']); // Redirect to login page
 
         },
@@ -88,6 +99,13 @@ emailid:string="";
         }
       });
     }
+  }
+  private isValidPassword(password: string): boolean {
+    const minLength = 6;
+    const hasSpecialChar = /[!@#$%^&*(),.?":{}|<>]/.test(password);
+    const hasUpperCase = /[A-Z]/.test(password);
+    const hasNumber = /[0-9]/.test(password);
+    return password.length >= minLength && hasSpecialChar && hasUpperCase && hasNumber;
   }
 }
 

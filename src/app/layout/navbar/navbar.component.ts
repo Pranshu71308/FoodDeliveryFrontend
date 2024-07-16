@@ -17,7 +17,6 @@ export class NavbarComponent {
   }
 
   logout() {
-    // Implement your logout logic here
     console.log('Logout clicked');
   }
 }

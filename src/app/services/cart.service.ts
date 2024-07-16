@@ -7,9 +7,10 @@ import { Observable, catchError, tap, throwError } from 'rxjs';
 export class CartService {
   private cartItems: any[] = [];
   private storageKey = 'cartItems';
-  private apiUrl = 'https://localhost:7299/api/Food'; // Replace with your API endpoint URL
+  private apiUrl = 'https://localhost:7299/api/Food';
+  private FoodapiUrl = 'https://localhost:7299/api/Payment'; 
 
-  constructor(private http:HttpClient) {
+  constructor(private http: HttpClient) {
     this.loadCartItems();
   }
   private loadCartItems(): void {
@@ -29,7 +30,6 @@ export class CartService {
       quantity: quantity,
       totalPrice: totalPrice
     };
-    console.log("BODY"+body.totalPrice);
     return this.http.post<any>(`${this.apiUrl}/storeCartDetails`, body).pipe(
       tap((response: any) => {
         console.log('Response from server:', response);
@@ -50,12 +50,49 @@ export class CartService {
     return this.cartItems;
   }
   clearCart(userId: number): Observable<any> {
-    const body = { userId: userId }; // Wrap userId in an object
+    const body = { userId: userId };
     console.log(userId + " In CartService");
     return this.http.post<any>(`${this.apiUrl}/DeleteCartDetails/${userId}`, body);
   }
   updateCartItems(userId: number, cartItems: any[]): Observable<void> {
     return this.http.put<void>(`${this.apiUrl}/${userId}`, cartItems);
   }
+  storePaymentDetails(userId: number, cartItems: any[], paymentId: string, totalPrice: number, deliveryAddress: string): Observable<any> {
+    const body = {
+      userId: userId,
+      transactionNumber: paymentId,
+      totalPrice: totalPrice,
+      address: deliveryAddress,
+      items: cartItems.map(item => ({
+        restaurantId: item.restaurantId,
+        itemId: item.itemId,
+        quantity: item.quantity,
+        price: item.price
+      }))
+    };
+    return this.http.post<any>(`${this.FoodapiUrl}/createOrder`, body).pipe(
+      catchError(error => {
+        console.error('Error:', error);
+        return throwError(() => new Error('Something bad happened; please try again later.'));
+      })
+    );
+  }
+  getUserOrders(userId: number): Observable<any> {
+    return this.http.get<any>(`${this.apiUrl}/GetUserOrders/${userId}`).pipe(
+      catchError(this.handleError)
+    );
+  }
 
+  storeRatingDetails(restaurantId: number,ratings:number): Observable<any> {
+    const body = {
+    restaurantId:restaurantId,
+    ratings:ratings
+    };
+    return this.http.post<any>(`${this.apiUrl}/UpdateRatings`, body).pipe(
+      catchError(error => {
+        console.error('Error:', error);
+        return throwError(() => new Error('Something bad happened; please try again later.'));
+      })
+    );
+  }
 }

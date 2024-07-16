@@ -1,0 +1,17 @@
+
+<app-navbar></app-navbar>  
+  <div class="cards-container">
+    <div class="card" *ngFor="let restaurant of filteredRestaurants" (click)="onCardClick(restaurant.restaurantID,restaurant.restaurantName,restaurant.location,restaurant.ratings,restaurant.latitude,restaurant.longitude,restaurant.openingTime,restaurant.closingTime)">
+      <div class="image-container">
+        <img *ngIf="restaurant.image" [src]="'data:image/jpeg;base64,' + restaurant.image" alt="Restaurant Image">
+      </div>
+      <h2>{{ restaurant.restaurantName }}</h2>
+      <p class="left-aligned">Location: {{ restaurant.location }}</p>
+      <div class="rating-container">
+        <div class="rating-box">
+          <i class="fas fa-star"></i> {{ restaurant.ratings }}
+        </div>
+      </div>
+    </div>
+  </div>
+  
